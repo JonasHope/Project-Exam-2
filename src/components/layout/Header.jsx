@@ -2,9 +2,19 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import logo from "../images/logo.png";
+import Modal from "../Modal";
 
 const MyHeader = styled.header`
   background-color: ${(props) => props.theme.color.c1};
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  max-width: 1200px;
+  margin: auto;
 `;
 
 const LogoContainer = styled.div`
@@ -31,15 +41,6 @@ const Slogan = styled.p`
   margin: 0px;
 `;
 
-const Nav = styled.nav`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px;
-  max-width: 1200px;
-  margin: auto;
-`;
-
 const NavUl = styled.ul`
   display: flex;
 `;
@@ -62,45 +63,6 @@ const AccountButton = styled.a`
   cursor: pointer;
 `;
 
-const ModalBackground = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: ${(props) => (props.modalopen ? "flex" : "none")};
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContent = styled.div`
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
-`;
-
-const CloseButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 18px;
-`;
-
-const Input = styled.input`
-  display: flex;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
-const LoginForm = styled.form``;
-
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -110,12 +72,6 @@ function Header() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-  };
-
-  const handleModalClick = (e) => {
-    if (e.target === e.currentTarget) {
-      closeModal();
-    }
   };
 
   return (
@@ -141,33 +97,7 @@ function Header() {
         <LoginContainer>
           <AccountButton onClick={openModal}>Login</AccountButton>
         </LoginContainer>
-        <ModalBackground modalopen={isModalOpen} onClick={handleModalClick}>
-          <ModalContent>
-            <CloseButton onClick={closeModal}>x</CloseButton>
-            <h2>Login</h2>
-            <LoginForm id="loginForm">
-              <label for="email">Email</label>
-              <Input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Email"
-                required
-                pattern="^[\w\-.]+@(stud.)?noroff.no$"
-                title="Only @(stud.)noroff.no domains are allowed to login."
-              />
-              <label for="password">Password</label>
-              <Input
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-              />
-              <button type="submit">Login</button>
-            </LoginForm>
-          </ModalContent>
-        </ModalBackground>
+        <Modal isOpen={isModalOpen} onClose={closeModal} />
       </Nav>
     </MyHeader>
   );
