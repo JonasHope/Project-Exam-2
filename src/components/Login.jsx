@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 
 const ModalBackground = styled.div`
@@ -41,19 +41,53 @@ const Input = styled.input`
 
 const LoginForm = styled.form``;
 
-function Modal({ isOpen, onClose }) {
+function LoginModal({ isOpen, onClose }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleModalClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        "https://api.noroff.dev/api/v1/holidaze/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("user", JSON.stringify(data));
+        alert("your logged in");
+      } else {
+        alert("login failed");
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+
   return (
-    <ModalBackground modalopen={isOpen} onClick={handleModalClick}>
+    <ModalBackground
+      modalopen={isOpen ? "true" : undefined}
+      onClick={handleModalClick}
+    >
       <ModalContent>
         <CloseButton onClick={onClose}>x</CloseButton>
         <h2>Login</h2>
-        <LoginForm id="loginForm">
+        <LoginForm onSubmit={handleLoginSubmit}>
           <label htmlFor="email">Email</label>
           <Input
             id="email"
@@ -63,6 +97,8 @@ function Modal({ isOpen, onClose }) {
             required
             pattern="^[\w\-.]+@(stud.)?noroff.no$"
             title="Only @(stud.)noroff.no domains are allowed to login."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label htmlFor="password">Password</label>
           <Input
@@ -71,6 +107,8 @@ function Modal({ isOpen, onClose }) {
             name="password"
             placeholder="Password"
             required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">Login</button>
         </LoginForm>
@@ -79,4 +117,4 @@ function Modal({ isOpen, onClose }) {
   );
 }
 
-export default Modal;
+export default LoginModal;

@@ -34,13 +34,23 @@ const ImgFeat = styled.img`
   width: 100%;
 `;
 
+const H1 = styled.h1`
+  font-size: 2rem;
+  margin-bottom: 0px;
+`;
+
+const H2 = styled.h2`
+  font-size: 1.2rem;
+  font-weight: normal;
+`;
+
 function FeaturedSection() {
   return (
     <FeaturedSectionContainer>
       <FeatContent>
         <H1Container>
-          <h1>Villas, Apartments, Cabins</h1>
-          <p>Turning Spaces into Holidaze</p>
+          <H1>Villas, Apartments, Cabins</H1>
+          <H2>Turning Spaces into Holidaze</H2>
         </H1Container>
         <ImageContainer>
           <ImgFeat src={featured} alt="featured image of building" />

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import logo from "../images/logo.png";
-import Modal from "../Modal";
+import LoginModal from "../Login";
 
 const MyHeader = styled.header`
   background-color: ${(props) => props.theme.color.c1};
@@ -97,7 +97,7 @@ function Header() {
         <LoginContainer>
           <AccountButton onClick={openModal}>Login</AccountButton>
         </LoginContainer>
-        <Modal isOpen={isModalOpen} onClose={closeModal} />
+        <LoginModal isOpen={isModalOpen} onClose={closeModal} />
       </Nav>
     </MyHeader>
   );
