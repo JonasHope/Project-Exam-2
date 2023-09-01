@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 import FeaturedSection from "../components/FeaturedSection";
 import SearchComponent from "../components/SearchComponent";
+import HomeVM from "../components/HomeVMSection";
 
 const HomeContent = styled.main``;
 
@@ -10,6 +11,7 @@ function Home() {
     <HomeContent>
       <FeaturedSection />
       <SearchComponent />
+      <HomeVM />
     </HomeContent>
   );
 }

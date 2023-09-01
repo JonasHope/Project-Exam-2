@@ -4,14 +4,14 @@ import featured from "../components/images/ex3.jpg";
 
 const FeaturedSectionContainer = styled.section`
   background-color: ${(props) => props.theme.color.c1};
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 const FeatContent = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  max-width: 1200px;
+  max-width: 1440px;
   margin: auto;
 `;
 
@@ -24,14 +24,13 @@ const H1Container = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  width: 50%;
-  overflow: hidden;
   height: 100vh;
+  overflow: hidden;
 `;
 
 const ImgFeat = styled.img`
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  object-fit: cover;
 `;
 
 const H1 = styled.h1`
