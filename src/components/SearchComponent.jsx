@@ -53,15 +53,18 @@ const ButtonSearch = styled.button`
   cursor: pointer;
 `;
 
-const SelectGuests = styled.select`
+const SelectGuests = styled.input`
   color: ${(props) => props.theme.color.c3};
   cursor: pointer;
   border: none;
   font-size: 1rem;
   margin-right: 5px;
+  width: 80px;
+  padding: 5px;
+  border: 2px solid ${(props) => props.theme.color.c1};
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.color.c5};
 `;
-
-const GuestOption = styled.option``;
 
 const Vl = styled.div`
   border-left: 2px solid ${(props) => props.theme.color.c4};
@@ -77,7 +80,7 @@ const DropdownWrapper = styled.div`
 
 const StyledDropdown = styled.div`
   position: absolute;
-  left: -30px;
+  left: -25px;
   bottom: 60px;
   z-index: 2;
 `;
@@ -94,7 +97,7 @@ const HideSearch = styled.div`
   text-align: center;
   border-radius: 20px 20px 0px 0px;
   transition: background-color 0.3s, transform 0.3s;
-  transform: translateY(${(props) => (props.visible ? "0" : "280%")});
+  transform: translateY(${(props) => (props.visible ? "0" : "310%")});
   cursor: pointer;
 
   &:hover {
@@ -200,12 +203,12 @@ function SearchComponent() {
           <Vl></Vl>
           <SearchFormChildren>
             <H3>Guests</H3>
-            <SelectGuests id="guests" name="guests">
-              <GuestOption value="1">1 Guest</GuestOption>
-              <GuestOption value="2">2 Guests</GuestOption>
-              <GuestOption value="3">3 Guests</GuestOption>
-              <GuestOption value="4">4 Guests</GuestOption>
-            </SelectGuests>
+            <SelectGuests
+              type="number"
+              id="guests"
+              name="guests"
+              placeholder="Number"
+            ></SelectGuests>
             <FontAwesomeIcon icon={faUser} style={{ color: "#ff7e5f" }} />
           </SearchFormChildren>
           <ButtonSearch type="submit" aria-label="search button for venues">
