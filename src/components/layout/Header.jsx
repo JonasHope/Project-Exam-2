@@ -5,7 +5,8 @@ import logo from "../images/logo.png";
 import LoginModal from "../Login";
 
 const MyHeader = styled.header`
-  background-color: ${(props) => props.theme.color.c1};
+  background-color: ${(props) => props.theme.color.c5};
+  box-shadow: 0px 3px 6px rgb(239, 243, 246);
 `;
 
 const Nav = styled.nav`
@@ -31,18 +32,19 @@ const LogoImg = styled.img`
 const LogoTextDiv = styled.div``;
 
 const Logo = styled.h2`
-  font-size: 30px;
+  font-size: 1.5rem;
   font-family: "poppins-m";
   margin: 0px;
 `;
 
 const Slogan = styled.p`
-  font-size: 12px;
+  font-size: 0.7rem;
   margin: 0px;
 `;
 
 const NavUl = styled.ul`
   display: flex;
+  margin: 0px;
 `;
 
 const NavLinks = styled.li`

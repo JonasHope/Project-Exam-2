@@ -1,10 +1,11 @@
 import React from "react";
 import { styled } from "styled-components";
-import featured from "../components/images/ex3.jpg";
+import featured from "../components/images/a.jpg";
 
 const FeaturedSectionContainer = styled.section`
-  background-color: ${(props) => props.theme.color.c1};
+  background-color: ${(props) => props.theme.color.c2};
   min-height: 100vh;
+  padding: 10px;
 `;
 
 const FeatContent = styled.div`
@@ -24,13 +25,13 @@ const H1Container = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  height: 100vh;
-  overflow: hidden;
-`;
-
-const ImgFeat = styled.img`
-  height: 100vh;
-  object-fit: cover;
+  background-image: url(${featured});
+  width: 60%;
+  height: 90vh;
+  background-repeat: no-repeat, no-repeat;
+  background-position: right, left;
+  background-size: cover;
+  border-radius: 10px;
 `;
 
 const H1 = styled.h1`
@@ -51,9 +52,7 @@ function FeaturedSection() {
           <H1>Villas, Apartments, Cabins</H1>
           <H2>Turning Spaces into Holidaze</H2>
         </H1Container>
-        <ImageContainer>
-          <ImgFeat src={featured} alt="featured image of building" />
-        </ImageContainer>
+        <ImageContainer></ImageContainer>
       </FeatContent>
     </FeaturedSectionContainer>
   );
