@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
-import SearchComponent from "../components/SearchComponent";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSliders } from "@fortawesome/free-solid-svg-icons";
+import SearchComponent from "../components/search/SearchComponent";
 import FetchVenues from "../components/FetchingVenues";
+import SortingVenues from "../components/SortingVenues";
 
 const VenuesSection = styled.section`
   background-color: ${(props) => props.theme.color.c2};
@@ -37,6 +36,12 @@ const FilterVenues = styled.div`
 `;
 
 function Venues() {
+  const [sortOrder, setSortOrder] = useState("desc");
+
+  const handleSortChange = (newSortOrder) => {
+    setSortOrder(newSortOrder);
+  };
+
   return (
     <VenuesSection>
       <SearchComponent />
@@ -47,10 +52,10 @@ function Venues() {
             <span>A list of all selected venues</span>
           </SiteTitle>
           <FilterVenues>
-            <FontAwesomeIcon icon={faSliders} />
+            <SortingVenues onSortChange={handleSortChange} />
           </FilterVenues>
         </FilterDiv>
-        <FetchVenues />
+        <FetchVenues sortOrder={sortOrder} />
       </VenuesWidth>
     </VenuesSection>
   );

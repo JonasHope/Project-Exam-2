@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 import FeaturedSection from "../components/FeaturedSection";
-import SearchComponent from "../components/SearchComponent";
+import SearchComponent from "../components/search/SearchComponent";
 import HomeVM from "../components/HomeVMSection";
 
 const HomeContent = styled.main``;

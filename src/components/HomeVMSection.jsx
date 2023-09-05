@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 
 const VMHomeContainer = styled.section`
-  background-color: ${(props) => props.theme.color.c2};
+  background-color: ${(props) => props.theme.color.c5};
   padding: 30px 10px;
 `;
 

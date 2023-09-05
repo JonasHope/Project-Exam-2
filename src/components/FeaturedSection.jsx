@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import featured from "../components/images/a.jpg";
+import featured from "../components/images/feat.jpg";
 
 const FeaturedSectionContainer = styled.section`
   background-color: ${(props) => props.theme.color.c2};

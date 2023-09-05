@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,6 +10,8 @@ import {
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { fetchVenues } from "../../API/api";
+import CustomDropdown from "../CustomDropdown";
 
 const SearchContainer = styled.div`
   position: fixed;
@@ -25,8 +27,10 @@ const SearchContent = styled.div`
   margin: auto;
   padding: 2px 20px;
   border-radius: 20px 20px 0px 0px;
-  transition: all 0.3s; /* Adding a transition for smooth sliding */
+  transition: all 0.3s;
   transform: translateY(${(props) => (props.visible ? "0" : "100%")});
+  border: 1px solid ${(props) => props.theme.color.c1};
+  border-bottom: none;
 `;
 
 const SearchForm = styled.form`
@@ -56,7 +60,6 @@ const ButtonSearch = styled.button`
 const SelectGuests = styled.input`
   color: ${(props) => props.theme.color.c3};
   cursor: pointer;
-  border: none;
   font-size: 1rem;
   margin-right: 5px;
   width: 80px;
@@ -124,7 +127,24 @@ function SearchComponent() {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [searchContentVisible, setSearchContentVisible] = useState(true);
   const [chevronrotated, setchevronrotated] = useState(false);
+  const [countries, setCountries] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchCountries() {
+      try {
+        const venues = await fetchVenues("asc");
+        const uniqueCountries = [
+          ...new Set(venues.map((venue) => venue.location.country)),
+        ];
+        setCountries(uniqueCountries);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    }
+
+    fetchCountries();
+  }, []);
 
   const handleDateSelection = (dates) => {
     setDateRange(dates);
@@ -169,7 +189,18 @@ function SearchComponent() {
         <SearchForm onSubmit={handleSubmit}>
           <SearchFormChildren>
             <H3>Location</H3>
-            <span>Where are you going? </span>
+            <DropdownWrapper>
+              <CustomDropdown
+                options={countries.map((country) => ({
+                  value: country,
+                  label: country,
+                }))}
+                onOptionChange={(selectedCountry) => {
+                  // Handle the selected country here
+                  console.log(`Selected country: ${selectedCountry}`);
+                }}
+              />
+            </DropdownWrapper>
             <FontAwesomeIcon icon={faHotel} style={{ color: "#ff7e5f" }} />
           </SearchFormChildren>
           <Vl></Vl>

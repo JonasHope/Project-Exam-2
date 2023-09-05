@@ -9,6 +9,7 @@ import {
   faDog,
   faCoffee,
 } from "@fortawesome/free-solid-svg-icons";
+import { fetchVenues } from "../API/api";
 
 const VenuesContainer = styled.div`
   background-color: ${(props) => props.theme.color.c5};
@@ -69,7 +70,8 @@ const Metas = styled.div`
 const IconColumn = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  color: ${(props) => props.theme.color.c7};
 `;
 
 const TextColumn = styled.div`
@@ -106,25 +108,23 @@ const VenuePrice = styled.p`
   margin: 16px;
   padding: 5px;
   font-size: 1.2rem;
-  color: ${(props) => props.theme.color.c6};
+  color: ${(props) => props.theme.color.c7};
 `;
 
 const CardSplitter = styled.div`
   display: flex;
 `;
 
-function FetchVenues() {
-  const url = "https://api.noroff.dev/api/v1/holidaze/venues";
-
+function FetchVenues({ sortOrder }) {
   const [venues, setVenues] = useState([]);
+
   useEffect(() => {
     async function getVenues() {
-      const response = await fetch(url);
-      const json = await response.json();
-      setVenues(json);
+      const venues = await fetchVenues(sortOrder);
+      setVenues(venues);
     }
     getVenues();
-  }, []);
+  }, [sortOrder]);
 
   const maxDescriptionSize = (description) => {
     const maxDescriptionLength = 200;
