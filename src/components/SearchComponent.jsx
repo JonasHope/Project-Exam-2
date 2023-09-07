@@ -1,29 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHotel,
-  faCalendar,
   faUser,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { fetchVenues } from "../../API/api";
-import CustomDropdown from "../CustomDropdown";
+import { fetchVenues } from "../API/api";
 
 const SearchContainer = styled.div`
   position: fixed;
   bottom: 0;
   left: 50%;
-  margin-left: -400px;
+  margin-left: -300px;
   z-index: 1;
 `;
 
 const SearchContent = styled.div`
   background-color: ${(props) => props.theme.color.c5};
-  width: 800px;
+  width: 600px;
   margin: auto;
   padding: 2px 20px;
   border-radius: 20px 20px 0px 0px;
@@ -35,7 +31,7 @@ const SearchContent = styled.div`
 
 const SearchForm = styled.form`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -44,7 +40,8 @@ const SearchFormChildren = styled.div`
 `;
 
 const H3 = styled.h4`
-  margin: 0px 0px 5px 0px;
+  margin: 0;
+  margin-bottom: 5px;
 `;
 
 const ButtonSearch = styled.button`
@@ -73,7 +70,7 @@ const Vl = styled.div`
   border-left: 2px solid ${(props) => props.theme.color.c4};
   height: 40px;
   border-radius: 20px;
-  margin: 0px 10px;
+  margin: 0 10px;
 `;
 
 const DropdownWrapper = styled.div`
@@ -81,20 +78,8 @@ const DropdownWrapper = styled.div`
   display: inline-block;
 `;
 
-const StyledDropdown = styled.div`
-  position: absolute;
-  left: -25px;
-  bottom: 60px;
-  z-index: 2;
-`;
-
-const StyledDateSpan = styled.span`
-  cursor: pointer;
-  margin-right: 10px;
-`;
-
 const HideSearch = styled.div`
-  background-color: rgb(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   width: 95%;
   margin: auto;
   text-align: center;
@@ -122,13 +107,20 @@ const IconWrapper = styled.div`
   }
 `;
 
-function SearchComponent() {
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [showDatePicker, setShowDatePicker] = useState(false);
+const Select = styled.select`
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+`;
+
+function SearchComponent({ onSearch }) {
   const [searchContentVisible, setSearchContentVisible] = useState(true);
-  const [chevronrotated, setchevronrotated] = useState(false);
+  const [chevronRotated, setChevronRotated] = useState(false);
   const [countries, setCountries] = useState([]);
   const navigate = useNavigate();
+
+  const [country, setCountry] = useState("");
+  const [maxGuests, setMaxGuests] = useState("");
 
   useEffect(() => {
     async function fetchCountries() {
@@ -146,29 +138,15 @@ function SearchComponent() {
     fetchCountries();
   }, []);
 
-  const handleDateSelection = (dates) => {
-    setDateRange(dates);
-
-    if (dates[0] && dates[1]) {
-      setShowDatePicker(false);
-    }
+  const toggleSearchContent = () => {
+    setSearchContentVisible(!searchContentVisible);
+    setChevronRotated(!chevronRotated);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const startDate = dateRange[0] ? dateRange[0].toLocaleDateString() : "";
-    const endDate = dateRange[1] ? dateRange[1].toLocaleDateString() : "";
-    const guests = e.target.guests.value;
-
-    const searchQuery = `?start=${startDate}&end=${endDate}&guests=${guests}`;
-
-    navigate(`/Venues${searchQuery}`);
-  };
-
-  const toggleSearchContent = () => {
-    setSearchContentVisible(!searchContentVisible);
-    setchevronrotated(!chevronrotated);
+    navigate(`/Venues?country=${country}&maxGuests=${maxGuests}`);
+    onSearch(country, maxGuests);
   };
 
   return (
@@ -176,12 +154,12 @@ function SearchComponent() {
       <HideSearch
         aria-label="hide searchbar"
         onClick={() => {
-          setchevronrotated(!chevronrotated);
+          setChevronRotated(!chevronRotated);
           toggleSearchContent();
         }}
         visible={searchContentVisible ? "true" : undefined}
       >
-        <IconWrapper chevronrotated={chevronrotated ? "true" : undefined}>
+        <IconWrapper chevronRotated={chevronRotated ? "true" : undefined}>
           <FontAwesomeIcon icon={faChevronDown} />
         </IconWrapper>
       </HideSearch>
@@ -190,46 +168,20 @@ function SearchComponent() {
           <SearchFormChildren>
             <H3>Location</H3>
             <DropdownWrapper>
-              <CustomDropdown
-                options={countries.map((country) => ({
-                  value: country,
-                  label: country,
-                }))}
-                onOptionChange={(selectedCountry) => {
-                  // Handle the selected country here
-                  console.log(`Selected country: ${selectedCountry}`);
-                }}
-              />
+              <Select
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                name="country"
+              >
+                <option value="">Choose country</option>
+                {countries.map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </Select>
             </DropdownWrapper>
             <FontAwesomeIcon icon={faHotel} style={{ color: "#ff7e5f" }} />
-          </SearchFormChildren>
-          <Vl></Vl>
-          <SearchFormChildren>
-            <H3>Date</H3>
-            <DropdownWrapper>
-              <StyledDateSpan
-                onClick={() => setShowDatePicker(!showDatePicker)}
-              >
-                {dateRange[0] && dateRange[1]
-                  ? `${dateRange[0].toLocaleDateString()} - ${dateRange[1].toLocaleDateString()}`
-                  : "Check in - Check out"}
-              </StyledDateSpan>
-              {showDatePicker && (
-                <StyledDropdown>
-                  <DatePicker
-                    selected={dateRange[0]}
-                    startDate={dateRange[0]}
-                    endDate={dateRange[1]}
-                    onChange={handleDateSelection}
-                    selectsRange
-                    inline
-                    locale="en-GB"
-                    dateFormat="dd/MM/yyyy"
-                  />
-                </StyledDropdown>
-              )}
-            </DropdownWrapper>
-            <FontAwesomeIcon icon={faCalendar} style={{ color: "#ff7e5f" }} />
           </SearchFormChildren>
           <Vl></Vl>
           <SearchFormChildren>
@@ -239,7 +191,9 @@ function SearchComponent() {
               id="guests"
               name="guests"
               placeholder="Number"
-            ></SelectGuests>
+              value={maxGuests}
+              onChange={(e) => setMaxGuests(e.target.value)}
+            />
             <FontAwesomeIcon icon={faUser} style={{ color: "#ff7e5f" }} />
           </SearchFormChildren>
           <ButtonSearch type="submit" aria-label="search button for venues">

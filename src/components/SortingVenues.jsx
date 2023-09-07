@@ -27,7 +27,7 @@ function SortingVenues({ onSortChange }) {
         options={sortOptions}
         selectedOption={selectedSortOrder}
         onOptionChange={handleSortChange}
-        label="Sort venues"
+        label="Sort venues:"
         initialLabel={initialLabel}
       />
     </SortingVenuesContainer>

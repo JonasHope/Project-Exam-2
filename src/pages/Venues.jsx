@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import SearchComponent from "../components/search/SearchComponent";
 import FetchVenues from "../components/FetchingVenues";
 import SortingVenues from "../components/SortingVenues";
+import SearchComponent from "../components/SearchComponent";
+import { useLocation } from "react-router-dom";
 
 const VenuesSection = styled.section`
   background-color: ${(props) => props.theme.color.c2};
@@ -36,15 +37,39 @@ const FilterVenues = styled.div`
 `;
 
 function Venues() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const [sortOrder, setSortOrder] = useState("desc");
+  const countryFilter = queryParams.get("country") || "";
+  const maxGuestsFilter = queryParams.get("maxGuests") || "";
 
   const handleSortChange = (newSortOrder) => {
     setSortOrder(newSortOrder);
   };
 
+  const handleSearch = (country, guests) => {
+    const newQueryParams = new URLSearchParams(location.search);
+    if (country) {
+      newQueryParams.set("country", country);
+    } else {
+      newQueryParams.delete("country");
+    }
+    if (guests) {
+      newQueryParams.set("maxGuests", guests);
+    } else {
+      newQueryParams.delete("maxGuests");
+    }
+
+    const newURL = `${location.pathname}?${newQueryParams.toString()}`;
+
+    window.location.href = newURL;
+
+    setSortOrder("desc");
+  };
+
   return (
     <VenuesSection>
-      <SearchComponent />
+      <SearchComponent onSearch={handleSearch} />
       <VenuesWidth>
         <FilterDiv>
           <SiteTitle>
@@ -55,7 +80,11 @@ function Venues() {
             <SortingVenues onSortChange={handleSortChange} />
           </FilterVenues>
         </FilterDiv>
-        <FetchVenues sortOrder={sortOrder} />
+        <FetchVenues
+          sortOrder={sortOrder}
+          countryFilter={countryFilter}
+          maxGuestsFilter={maxGuestsFilter}
+        />
       </VenuesWidth>
     </VenuesSection>
   );

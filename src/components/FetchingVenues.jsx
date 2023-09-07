@@ -115,16 +115,29 @@ const CardSplitter = styled.div`
   display: flex;
 `;
 
-function FetchVenues({ sortOrder }) {
+function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
   const [venues, setVenues] = useState([]);
 
   useEffect(() => {
     async function getVenues() {
       const venues = await fetchVenues(sortOrder);
-      setVenues(venues);
+
+      const filteredVenues = venues.filter((venue) => {
+        if (countryFilter && venue.location.country !== countryFilter) {
+          return false;
+        }
+
+        if (maxGuestsFilter && maxGuestsFilter > venue.maxGuests) {
+          return false;
+        }
+
+        return true;
+      });
+
+      setVenues(filteredVenues);
     }
     getVenues();
-  }, [sortOrder]);
+  }, [sortOrder, countryFilter, maxGuestsFilter]);
 
   const maxDescriptionSize = (description) => {
     const maxDescriptionLength = 200;

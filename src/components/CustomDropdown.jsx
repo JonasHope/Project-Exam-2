@@ -23,7 +23,6 @@ const Select = styled.select`
 
 const DropdownOptions = styled.div`
   position: absolute;
-  top: 120%;
   width: 100%;
   background-color: ${(props) => props.theme.color.c1};
   border: 1px solid ${(props) => props.theme.color.c2};
@@ -84,7 +83,7 @@ function CustomDropdown({
   return (
     <CustomDropdownContainer ref={customDropdownRef}>
       <Label htmlFor="customDropdown" onClick={toggleDropdown}>
-        {label}: <b>{initialLabel}</b>
+        {label} <b>{initialLabel}</b>
       </Label>
       <Select
         id="customDropdown"
@@ -99,7 +98,10 @@ function CustomDropdown({
           </option>
         ))}
       </Select>
-      <DropdownOptions isOpen={isOpen}>
+      <DropdownOptions
+        className="placement"
+        isOpen={isOpen ? "true" : undefined}
+      >
         {options.map((option) => (
           <Option
             key={option.value}
