@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import loginfeat from "./images/loginfeat.jpg";
 import ThemedButton from "../styles/Button";
+import { Navigate } from "react-router-dom";
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -112,7 +113,7 @@ function LoginModal({ isOpen, onClose }) {
         const data = await response.json();
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("user", JSON.stringify(data));
-        alert("your logged in");
+        window.location.reload();
       } else {
         alert("login failed");
       }

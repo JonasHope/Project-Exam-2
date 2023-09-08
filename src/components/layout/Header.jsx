@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import logo from "../images/logo.png";
@@ -67,6 +67,12 @@ const AccountButton = styled.a`
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const accountInfo = localStorage.getItem("user");
+    setIsLoggedIn(!!accountInfo);
+  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -74,6 +80,15 @@ function Header() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleAccountButtonClick = () => {
+    if (isLoggedIn) {
+      localStorage.clear();
+      setIsLoggedIn(false);
+    } else {
+      openModal();
+    }
   };
 
   return (
@@ -97,7 +112,9 @@ function Header() {
           </NavLinks>
         </NavUl>
         <LoginContainer>
-          <AccountButton onClick={openModal}>Login</AccountButton>
+          <AccountButton onClick={handleAccountButtonClick}>
+            {isLoggedIn ? "Logout" : "Login"}
+          </AccountButton>
         </LoginContainer>
         <LoginModal isOpen={isModalOpen} onClose={closeModal} />
       </Nav>
