@@ -10,6 +10,12 @@ const theme = {
     c6: "rgb(100,68,171);",
     c7: "rgb(255, 126, 95)",
   },
+  media: {
+    mobile: `@media (max-width: 768px)`,
+    tablet: `@media (max-width: 992px)`,
+    desktop: `@media (max-width: 1220px)`,
+    desktopxl: `@media (min-width: 1221px)`,
+  },
 };
 
 export const Theme = ({ children }) => (

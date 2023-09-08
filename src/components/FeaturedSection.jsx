@@ -14,6 +14,10 @@ const FeatContent = styled.div`
   flex-wrap: wrap;
   max-width: 1440px;
   margin: auto;
+
+  ${(props) => props.theme.media.tablet} {
+    justify-content: center;
+  }
 `;
 
 const H1Container = styled.div`
@@ -26,12 +30,20 @@ const H1Container = styled.div`
 
 const ImageContainer = styled.div`
   background-image: url(${featured});
-  width: 60%;
+  width: 50%;
   height: 90vh;
   background-repeat: no-repeat, no-repeat;
   background-position: right, left;
   background-size: cover;
   border-radius: 10px;
+
+  ${(props) => props.theme.media.tablet} {
+    width: 100%;
+  }
+
+  ${(props) => props.theme.media.desktopxl} {
+    width: 60%;
+  }
 `;
 
 const H1 = styled.h1`

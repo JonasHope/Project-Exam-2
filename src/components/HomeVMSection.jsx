@@ -8,6 +8,7 @@ const VMHomeContainer = styled.section`
 
 const H2 = styled.h2`
   padding: 10px;
+  text-align: center;
 `;
 
 const H3 = styled.h3`
@@ -36,6 +37,11 @@ const VMP = styled.p`
 const VMdivs = styled.div`
   display: flex;
   justify-content: space-between;
+
+  ${(props) => props.theme.media.tablet} {
+    align-items: center;
+    flex-direction: column;
+  }
 `;
 
 function HomeVM() {

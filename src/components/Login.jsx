@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
+import loginfeat from "./images/loginfeat.jpg";
+import ThemedButton from "../styles/Button";
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -14,12 +16,34 @@ const ModalBackground = styled.div`
   z-index: 1000;
 `;
 
-const ModalContent = styled.div`
-  background-color: white;
+const LoginContainer = styled.div`
   padding: 20px;
+  width: 50%;
+
+  ${(props) => props.theme.media.mobile} {
+    padding: 0px 0px 20px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70vw;
+  }
+`;
+
+const ModalContent = styled.div`
+  background-color: ${(props) => props.theme.color.c5};
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
+  display: flex;
+  width: 50vw;
+  height: 50vh;
+
+  ${(props) => props.theme.media.mobile} {
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    width: 70vw;
+    height: 70vh;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -32,14 +56,32 @@ const CloseButton = styled.button`
 `;
 
 const Input = styled.input`
-  display: flex;
   padding: 10px;
-  margin-bottom: 10px;
+  margin: 0px 0px 10px 0px;
   border: 1px solid #ccc;
   border-radius: 4px;
 `;
 
-const LoginForm = styled.form``;
+const ImageContainer = styled.div`
+  background-image: url(${loginfeat});
+  width: 50%;
+  height: 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 10px;
+
+  ${(props) => props.theme.media.mobile} {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const LoginForm = styled.form`
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+`;
 
 function LoginModal({ isOpen, onClose }) {
   const [email, setEmail] = useState("");
@@ -85,33 +127,36 @@ function LoginModal({ isOpen, onClose }) {
       onClick={handleModalClick}
     >
       <ModalContent>
-        <CloseButton onClick={onClose}>x</CloseButton>
-        <h2>Login</h2>
-        <LoginForm onSubmit={handleLoginSubmit}>
-          <label htmlFor="email">Email</label>
-          <Input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            pattern="^[\w\-.]+@(stud.)?noroff.no$"
-            title="Only @(stud.)noroff.no domains are allowed to login."
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <label htmlFor="password">Password</label>
-          <Input
-            id="password"
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">Login</button>
-        </LoginForm>
+        <ImageContainer></ImageContainer>
+        <LoginContainer>
+          <CloseButton onClick={onClose}>x</CloseButton>
+          <h2>Login</h2>
+          <LoginForm onSubmit={handleLoginSubmit}>
+            <label htmlFor="email">Email</label>
+            <Input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              pattern="^[\w\-.]+@(stud.)?noroff.no$"
+              title="Only @(stud.)noroff.no domains are allowed to login."
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <label htmlFor="password">Password</label>
+            <Input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <ThemedButton type="submit">Login</ThemedButton>
+          </LoginForm>
+        </LoginContainer>
       </ModalContent>
     </ModalBackground>
   );
