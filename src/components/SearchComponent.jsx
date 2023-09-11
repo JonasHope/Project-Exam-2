@@ -28,7 +28,7 @@ const SearchContent = styled.div`
   width: 600px;
   margin: auto;
   padding: 2px 20px;
-  border-radius: 20px 20px 0px 0px;
+
   transition: all 0.3s;
   transform: translateY(${(props) => (props.visible ? "0" : "100%")});
   border: 1px solid ${(props) => props.theme.color.c1};
@@ -41,7 +41,6 @@ const SearchContent = styled.div`
     padding: 2px 20px;
     border-bottom: 1px solid ${(props) => props.theme.color.c1};
     border-left: none;
-    border-radius: 0px 20px 20px 0px;
     display: flex;
     padding: 20px 10px;
     transform: translateX(${(props) => (props.visible ? "0" : "-100%")});
@@ -104,12 +103,10 @@ const DropdownWrapper = styled.div`
 
 const HideSearch = styled.div`
   background-color: ${(props) => props.theme.color.c3};
-  width: 95%;
-  height: 25px;
-  margin: auto;
+  padding: 5px;
   border-radius: 20px 20px 0px 0px;
   transition: background-color 0.3s, transform 0.3s;
-  transform: translateY(${(props) => (props.visible ? "0" : "315%")});
+  transform: translateY(${(props) => (props.visible ? "0" : "365%")});
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -124,8 +121,8 @@ const HideSearch = styled.div`
   }
 
   ${(props) => props.theme.media.mobile} {
-    transform: translateX(${(props) => (props.visible ? "0" : "-745%")});
-    height: 20vh;
+    transform: translateX(${(props) => (props.visible ? "0" : "-495%")});
+
     width: 20px;
     border-radius: 0px 20px 20px 0px;
   }
