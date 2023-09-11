@@ -9,7 +9,7 @@ import {
   faDog,
   faCoffee,
 } from "@fortawesome/free-solid-svg-icons";
-import { fetchVenues } from "../API/api";
+import { fetchVenues } from "../API/apiVenues";
 
 const VenuesContainer = styled.div`
   background-color: ${(props) => props.theme.color.c5};

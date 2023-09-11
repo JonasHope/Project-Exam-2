@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHotel, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { fetchVenues } from "../API/api";
+import { fetchVenues } from "../API/apiVenues";
 import ThemedButton from "../styles/Button";
 
 const SearchContainer = styled.div`
@@ -136,7 +136,7 @@ const IconWrapper = styled.div`
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 12px solid ${(props) => props.theme.color.c5};
+  border-top: 12px solid ${(props) => props.theme.color.c5};
   transition: transform 0.3s;
   transform: rotate(${(props) => (props.chevronRotated ? "180deg" : "0deg")});
 
@@ -223,7 +223,7 @@ function SearchComponent({ onSearch }) {
                 onChange={(e) => setCountry(e.target.value)}
                 name="country"
               >
-                <option value="" disabled selected>
+                <option value="" disabled>
                   Select Country
                 </option>
                 {countries.map((country) => (
