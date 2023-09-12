@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ThemedButton from "../../styles/Button";
 
 const BookingContainer = styled.form`
   display: flex;
@@ -89,6 +90,7 @@ function BookingForm({
         </b>
       </SelectedBooking>
       <H3>Total: £{totalPrice},- </H3>
+      <ThemedButton>Book Venue</ThemedButton>
     </BookingContainer>
   );
 }
