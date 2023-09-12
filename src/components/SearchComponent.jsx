@@ -135,7 +135,7 @@ const IconWrapper = styled.div`
   border-right: 8px solid transparent;
   border-top: 12px solid ${(props) => props.theme.color.c5};
   transition: transform 0.3s;
-  transform: rotate(${(props) => (props.chevronRotated ? "180deg" : "0deg")});
+  transform: rotate(${(props) => (props.iconrotate ? "180deg" : "0deg")});
 
   ${(props) => props.theme.media.mobile} {
     border-top: 8px solid transparent;
@@ -159,7 +159,7 @@ const IconSpaceing = styled.div`
 
 function SearchComponent({ onSearch }) {
   const [searchContentVisible, setSearchContentVisible] = useState(true);
-  const [chevronRotated, setChevronRotated] = useState(false);
+  const [iconrotate, seticonrotate] = useState(false);
   const [countries, setCountries] = useState([]);
   const navigate = useNavigate();
 
@@ -184,7 +184,7 @@ function SearchComponent({ onSearch }) {
 
   const toggleSearchContent = () => {
     setSearchContentVisible(!searchContentVisible);
-    setChevronRotated(!chevronRotated);
+    seticonrotate(!iconrotate);
   };
 
   const handleSubmit = (e) => {
@@ -198,14 +198,12 @@ function SearchComponent({ onSearch }) {
       <HideSearch
         aria-label="hide searchbar"
         onClick={() => {
-          setChevronRotated(!chevronRotated);
+          seticonrotate(!iconrotate);
           toggleSearchContent();
         }}
         visible={searchContentVisible ? "true" : undefined}
       >
-        <IconWrapper
-          chevronRotated={chevronRotated ? "true" : undefined}
-        ></IconWrapper>
+        <IconWrapper iconrotate={iconrotate ? "true" : undefined}></IconWrapper>
       </HideSearch>
       <SearchContent visible={searchContentVisible ? "true" : undefined}>
         <SearchForm onSubmit={handleSubmit}>
