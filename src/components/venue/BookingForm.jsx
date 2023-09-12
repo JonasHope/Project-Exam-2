@@ -12,6 +12,10 @@ const H2 = styled.h2`
   color: ${(props) => props.theme.color.c6};
 `;
 
+const H3 = styled.h3`
+  margin-top: 0px;
+`;
+
 const Select = styled.select`
   cursor: pointer;
   background-color: ${(props) => props.theme.color.c5};
@@ -84,7 +88,7 @@ function BookingForm({
           Nights.
         </b>
       </SelectedBooking>
-      <h3>Total: £{totalPrice},- </h3>
+      <H3>Total: £{totalPrice},- </H3>
     </BookingContainer>
   );
 }
