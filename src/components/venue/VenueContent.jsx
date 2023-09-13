@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { StyleSheetManager } from "styled-components";
+import TabGroup from "./VenueTabs";
 
 const InformationContainer = styled.div`
+  background-color: ${(props) => props.theme.color.c5};
+  padding: 10px;
+  border-radius: 10px;
   width: 50%;
 `;
 
@@ -71,6 +75,7 @@ function VenueInformation({ venueData }) {
             ))}
           </SmallImages>
         </VenueImagesContainer>
+        <TabGroup />
       </InformationContainer>
     </StyleSheetManager>
   );
