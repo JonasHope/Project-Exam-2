@@ -4,6 +4,7 @@ import FetchVenues from "../components/FetchingVenues";
 import SortingVenues from "../components/SortingVenues";
 import SearchComponent from "../components/SearchComponent";
 import { useLocation } from "react-router-dom";
+import { StyleSheetManager } from "styled-components";
 
 const VenuesSection = styled.section`
   background-color: ${(props) => props.theme.color.c2};
@@ -68,25 +69,29 @@ function Venues() {
   };
 
   return (
-    <VenuesSection>
-      <SearchComponent onSearch={handleSearch} />
-      <VenuesWidth>
-        <FilterDiv>
-          <SiteTitle>
-            <H1>Venues</H1>
-            <span>A list of all selected venues</span>
-          </SiteTitle>
-          <FilterVenues>
-            <SortingVenues onSortChange={handleSortChange} />
-          </FilterVenues>
-        </FilterDiv>
-        <FetchVenues
-          sortOrder={sortOrder}
-          countryFilter={countryFilter}
-          maxGuestsFilter={maxGuestsFilter}
-        />
-      </VenuesWidth>
-    </VenuesSection>
+    <StyleSheetManager
+      shouldForwardProp={(prop) => !["visible"].includes(prop)}
+    >
+      <VenuesSection>
+        <SearchComponent onSearch={handleSearch} />
+        <VenuesWidth>
+          <FilterDiv>
+            <SiteTitle>
+              <H1>Venues</H1>
+              <span>A list of all selected venues</span>
+            </SiteTitle>
+            <FilterVenues>
+              <SortingVenues onSortChange={handleSortChange} />
+            </FilterVenues>
+          </FilterDiv>
+          <FetchVenues
+            sortOrder={sortOrder}
+            countryFilter={countryFilter}
+            maxGuestsFilter={maxGuestsFilter}
+          />
+        </VenuesWidth>
+      </VenuesSection>
+    </StyleSheetManager>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { StyleSheetManager } from "styled-components";
 
 const InformationContainer = styled.div`
   width: 50%;
@@ -53,21 +54,25 @@ function VenueInformation({ venueData }) {
   };
 
   return (
-    <InformationContainer>
-      <VenueImagesContainer>
-        <HighlightedImage image={highlightedImage}></HighlightedImage>
-        <SmallImages>
-          {venueData?.media?.map((image, index) => (
-            <Image
-              key={index}
-              image={image}
-              highlighted={image === highlightedImage ? "true" : undefined}
-              onClick={() => handleImageClick(image)}
-            ></Image>
-          ))}
-        </SmallImages>
-      </VenueImagesContainer>
-    </InformationContainer>
+    <StyleSheetManager
+      shouldForwardProp={(prop) => !["image", "highlighted"].includes(prop)}
+    >
+      <InformationContainer>
+        <VenueImagesContainer>
+          <HighlightedImage image={highlightedImage}></HighlightedImage>
+          <SmallImages>
+            {venueData?.media?.map((image, index) => (
+              <Image
+                key={index}
+                image={image}
+                highlighted={image === highlightedImage ? "true" : undefined}
+                onClick={() => handleImageClick(image)}
+              ></Image>
+            ))}
+          </SmallImages>
+        </VenueImagesContainer>
+      </InformationContainer>
+    </StyleSheetManager>
   );
 }
 

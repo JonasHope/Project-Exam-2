@@ -4,6 +4,7 @@ import FeaturedSection from "../components/FeaturedSection";
 import SearchComponent from "../components/SearchComponent";
 import HomeVM from "../components/HomeVMSection";
 import { useNavigate } from "react-router-dom";
+import { StyleSheetManager } from "styled-components";
 
 const HomeContent = styled.main``;
 
@@ -15,11 +16,15 @@ function Home() {
   };
 
   return (
-    <HomeContent>
-      <FeaturedSection />
-      <SearchComponent onSearch={handleSearch} />
-      <HomeVM />
-    </HomeContent>
+    <StyleSheetManager
+      shouldForwardProp={(prop) => !["visable"].includes(prop)}
+    >
+      <HomeContent>
+        <FeaturedSection />
+        <SearchComponent onSearch={handleSearch} />
+        <HomeVM />
+      </HomeContent>
+    </StyleSheetManager>
   );
 }
 

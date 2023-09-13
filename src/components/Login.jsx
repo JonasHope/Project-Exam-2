@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import loginfeat from "./images/loginfeat.jpg";
 import ThemedButton from "../styles/Button";
-import { Navigate } from "react-router-dom";
+import { StyleSheetManager } from "styled-components";
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -123,43 +123,47 @@ function LoginModal({ isOpen, onClose }) {
   };
 
   return (
-    <ModalBackground
-      modalopen={isOpen ? "true" : undefined}
-      onClick={handleModalClick}
+    <StyleSheetManager
+      shouldForwardProp={(prop) => !["modalopen"].includes(prop)}
     >
-      <ModalContent>
-        <ImageContainer></ImageContainer>
-        <LoginContainer>
-          <CloseButton onClick={onClose}>x</CloseButton>
-          <h2>Login</h2>
-          <LoginForm onSubmit={handleLoginSubmit}>
-            <label htmlFor="email">Email</label>
-            <Input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="Email"
-              required
-              pattern="^[\w\-.]+@(stud.)?noroff.no$"
-              title="Only @(stud.)noroff.no domains are allowed to login."
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <label htmlFor="password">Password</label>
-            <Input
-              id="password"
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <ThemedButton type="submit">Login</ThemedButton>
-          </LoginForm>
-        </LoginContainer>
-      </ModalContent>
-    </ModalBackground>
+      <ModalBackground
+        modalopen={isOpen ? "true" : undefined}
+        onClick={handleModalClick}
+      >
+        <ModalContent>
+          <ImageContainer></ImageContainer>
+          <LoginContainer>
+            <CloseButton onClick={onClose}>x</CloseButton>
+            <h2>Login</h2>
+            <LoginForm onSubmit={handleLoginSubmit}>
+              <label htmlFor="email">Email</label>
+              <Input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                pattern="^[\w\-.]+@(stud.)?noroff.no$"
+                title="Only @(stud.)noroff.no domains are allowed to login."
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label htmlFor="password">Password</label>
+              <Input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <ThemedButton type="submit">Login</ThemedButton>
+            </LoginForm>
+          </LoginContainer>
+        </ModalContent>
+      </ModalBackground>
+    </StyleSheetManager>
   );
 }
 
