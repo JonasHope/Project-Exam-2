@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 const FirstContainer = styled.div``;
 
-const H1 = styled.h1``;
+const H1 = styled.h1`
+  margin-top: 0px;
+`;
 const Country = styled.span``;
 const Location = styled.span``;
 

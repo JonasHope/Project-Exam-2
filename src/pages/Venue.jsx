@@ -7,10 +7,17 @@ import Width from "../styles/Width";
 import calculateTotalPrice from "../components/venue/CalculatePrice";
 import VenueHeader from "../components/venue/VenueHeader";
 import BookingForm from "../components/venue/BookingForm";
+import VenueInformation from "../components/venue/VenueContent";
 
 const VenueContainer = styled.div`
   background-color: ${(props) => props.theme.color.c2};
   height: 100%;
+`;
+
+const VenueLayout = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 `;
 
 const BookingInfoContainer = styled.div`
@@ -55,23 +62,26 @@ function Venue() {
   return (
     <VenueContainer>
       <Width>
-        <BookingInfoContainer>
-          <VenueHeader venueData={venueData} />
-          <BookingForm
-            selectedGuests={selectedGuests}
-            setSelectedGuests={setSelectedGuests}
-            guestOptions={
-              maxGuests
-                ? Array.from({ length: maxGuests }, (_, index) => index + 1)
-                : []
-            }
-            dateRange={dateRange}
-            handleDateSelection={handleDateSelection}
-            showDatePicker={showDatePicker}
-            setShowDatePicker={setShowDatePicker}
-            totalPrice={totalPrice}
-          />
-        </BookingInfoContainer>
+        <VenueLayout>
+          <BookingInfoContainer>
+            <VenueHeader venueData={venueData} />
+            <BookingForm
+              selectedGuests={selectedGuests}
+              setSelectedGuests={setSelectedGuests}
+              guestOptions={
+                maxGuests
+                  ? Array.from({ length: maxGuests }, (_, index) => index + 1)
+                  : []
+              }
+              dateRange={dateRange}
+              handleDateSelection={handleDateSelection}
+              showDatePicker={showDatePicker}
+              setShowDatePicker={setShowDatePicker}
+              totalPrice={totalPrice}
+            />
+          </BookingInfoContainer>
+          <VenueInformation venueData={venueData} />
+        </VenueLayout>
       </Width>
     </VenueContainer>
   );
