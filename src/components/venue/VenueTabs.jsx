@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { StyleSheetManager } from "styled-components";
+import DescriptionTab from "./DescriptionTab";
 
 const Tab = styled.button`
   font-size: 20px;
@@ -13,7 +14,7 @@ const Tab = styled.button`
   ${({ active }) =>
     active &&
     `
-    border-bottom: 2px solid ${(props) => props.themed.color.c3};
+    border-bottom: 2px solid black;
     opacity:1;
     `}
 `;
@@ -26,21 +27,33 @@ const types = ["Description", "Information", "Location"];
 
 function TabGroup({ venueData }) {
   const [active, setActive] = useState(types[0]);
+
+  let content;
+  switch (active) {
+    case "Description":
+      content = <DescriptionTab venueData={venueData} />;
+      break;
+    default:
+      content = null;
+  }
   return (
     <>
-      <ButtonGroup>
-        {types.map((type) => (
-          <Tab
-            key={type}
-            active={active === type}
-            onClick={() => setActive(type)}
-          >
-            {type}
-          </Tab>
-        ))}
-      </ButtonGroup>
-      <p />
-      <p>helloooo </p>
+      <StyleSheetManager
+        shouldForwardProp={(prop) => !["active"].includes(prop)}
+      >
+        <ButtonGroup>
+          {types.map((type) => (
+            <Tab
+              key={type}
+              active={active === type}
+              onClick={() => setActive(type)}
+            >
+              {type}
+            </Tab>
+          ))}
+        </ButtonGroup>
+        {content}
+      </StyleSheetManager>
     </>
   );
 }

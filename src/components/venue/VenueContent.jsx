@@ -75,7 +75,7 @@ function VenueInformation({ venueData }) {
             ))}
           </SmallImages>
         </VenueImagesContainer>
-        <TabGroup />
+        <TabGroup venueData={venueData} />
       </InformationContainer>
     </StyleSheetManager>
   );
