@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { StyleSheetManager } from "styled-components";
-import TabGroup from "./VenueTabs";
+import TabGroup from "./tabs/VenueTabs";
 
 const InformationContainer = styled.div`
   background-color: ${(props) => props.theme.color.c5};
@@ -45,6 +45,7 @@ const Image = styled.div`
 `;
 
 function VenueInformation({ venueData }) {
+  console.log(venueData);
   const [highlightedImage, setHighlightedImage] = useState(null);
 
   useEffect(() => {
