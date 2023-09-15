@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -38,16 +38,94 @@ const SelectedBooking = styled.span`
   margin-top: 15px;
 `;
 
+const OverlappMessage = styled.p`
+  background-color: darkred;
+  color: white;
+  padding: 5px;
+`;
+
 function BookingForm({
   selectedGuests,
   setSelectedGuests,
   guestOptions,
   dateRange,
-  handleDateSelection,
+  setDateRange,
   showDatePicker,
   setShowDatePicker,
   totalPrice,
+  venueData,
 }) {
+  const [overlapError, setOverlapError] = useState("");
+
+  const generateDisabledDates = () => {
+    const disabledDates = [];
+    venueData?.bookings.forEach((booking) => {
+      const startDate = new Date(booking.dateFrom);
+      const endDate = new Date(booking.dateTo);
+
+      while (startDate <= endDate) {
+        disabledDates.push(new Date(startDate));
+        startDate.setDate(startDate.getDate() + 1);
+      }
+    });
+    return disabledDates;
+  };
+
+  const handleBookingSubmit = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+
+      if (!dateRange[0] || !dateRange[1]) {
+        return;
+      }
+
+      const bookingData = {
+        dateFrom: dateRange[0].toISOString(),
+        dateTo: dateRange[1].toISOString(),
+        guests: selectedGuests,
+        venueId: venueData.id,
+      };
+
+      const response = await fetch(
+        "https://api.noroff.dev/api/v1/holidaze/bookings",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(bookingData),
+        }
+      );
+
+      if (response.ok) {
+        console.log("Booking successful!");
+      } else {
+        console.error("Booking failed.");
+      }
+    } catch (error) {
+      console.error("An error occurred while making the booking:", error);
+    }
+  };
+
+  const disabledDates = generateDisabledDates();
+
+  const handleDateSelection = (dates) => {
+    const [startDate, endDate] = dates;
+    const overlappingBooking = venueData.bookings.find(
+      (booking) =>
+        startDate <= new Date(booking.dateTo) &&
+        endDate >= new Date(booking.dateFrom)
+    );
+
+    if (overlappingBooking) {
+      setOverlapError("This date range overlaps with an existing booking.");
+    } else {
+      setOverlapError("");
+      setDateRange(dates);
+    }
+  };
+
   return (
     <BookingContainer>
       <H2>Booking</H2>
@@ -69,15 +147,19 @@ function BookingForm({
           : "Check in - Check out"}
       </StyledDateSpan>
       {showDatePicker && (
-        <DatePicker
-          selected={dateRange[0]}
-          startDate={dateRange[0]}
-          endDate={dateRange[1]}
-          onChange={handleDateSelection}
-          selectsRange
-          inline
-          dateFormat="dd/MM/yyyy"
-        />
+        <div>
+          <DatePicker
+            selected={dateRange[0]}
+            startDate={dateRange[0]}
+            endDate={dateRange[1]}
+            onChange={handleDateSelection}
+            selectsRange
+            inline
+            dateFormat="dd/MM/yyyy"
+            excludeDates={disabledDates}
+          />
+          {overlapError && <OverlappMessage>{overlapError}</OverlappMessage>}
+        </div>
       )}
       <SelectedBooking>
         You have chosen{" "}
@@ -90,7 +172,7 @@ function BookingForm({
         </b>
       </SelectedBooking>
       <H3>Total: £{totalPrice},- </H3>
-      <ThemedButton>Book Venue</ThemedButton>
+      <ThemedButton onClick={handleBookingSubmit}>Book Venue</ThemedButton>
     </BookingContainer>
   );
 }

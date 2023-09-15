@@ -8,6 +8,8 @@ const InformationContainer = styled.div`
   padding: 10px;
   border-radius: 10px;
   width: 50%;
+  margin-bottom: 20px;
+  height: 100%;
 `;
 
 const VenueImagesContainer = styled.div`
@@ -45,7 +47,6 @@ const Image = styled.div`
 `;
 
 function VenueInformation({ venueData }) {
-  console.log(venueData);
   const [highlightedImage, setHighlightedImage] = useState(null);
 
   useEffect(() => {

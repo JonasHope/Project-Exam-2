@@ -11,7 +11,6 @@ import VenueInformation from "../components/venue/VenueContent";
 
 const VenueContainer = styled.div`
   background-color: ${(props) => props.theme.color.c2};
-  height: 100%;
 `;
 
 const VenueLayout = styled.div`
@@ -66,8 +65,10 @@ function Venue() {
           <BookingInfoContainer>
             <VenueHeader venueData={venueData} />
             <BookingForm
+              venueData={venueData}
               selectedGuests={selectedGuests}
               setSelectedGuests={setSelectedGuests}
+              setDateRange={setDateRange}
               guestOptions={
                 maxGuests
                   ? Array.from({ length: maxGuests }, (_, index) => index + 1)

@@ -154,7 +154,7 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
             <CardSplitter>
               <VenueImage>
                 <Featimg
-                  src={venue.media}
+                  src={venue.media[0]}
                   alt={venue.name}
                   onError={(e) => {
                     e.target.src =
