@@ -46,4 +46,5 @@ a {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: rgb(239, 243, 246);
 }
