@@ -10,6 +10,18 @@ const InformationContainer = styled.div`
   width: 50%;
   margin-bottom: 20px;
   height: 100%;
+
+  ${(props) => props.theme.media.desktop} {
+    width: 70%;
+  }
+
+  ${(props) => props.theme.media.tablet} {
+    width: 90%;
+  }
+
+  ${(props) => props.theme.media.mobile} {
+    width: 100%;
+  }
 `;
 
 const VenueImagesContainer = styled.div`
@@ -20,7 +32,7 @@ const VenueImagesContainer = styled.div`
 const HighlightedImage = styled.div`
   background-image: url(${(props) => props.image});
   width: 100%;
-  height: 300px;
+  height: 400px;
   background-repeat: no-repeat, no-repeat;
   background-position: center;
   background-size: cover;

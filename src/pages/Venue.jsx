@@ -11,18 +11,28 @@ import VenueInformation from "../components/venue/VenueContent";
 
 const VenueContainer = styled.div`
   background-color: ${(props) => props.theme.color.c2};
+  padding: 10px;
 `;
 
 const VenueLayout = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+
+  ${(props) => props.theme.media.desktop} {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 `;
 
 const BookingInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
+
+  ${(props) => props.theme.media.desktop} {
+    width: 70%;
+  }
 `;
 
 function Venue() {

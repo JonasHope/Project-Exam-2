@@ -19,6 +19,10 @@ const Tab = styled.button`
     border-bottom: 2px solid black;
     opacity:1;
     `}
+
+  ${(props) => props.theme.media.tablet} {
+    padding: 10px 10px;
+  }
 `;
 
 const ButtonGroup = styled.div`

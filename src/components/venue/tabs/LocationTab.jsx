@@ -5,6 +5,7 @@ import GoogleMapReact from "google-map-react";
 const MapContainer = styled.div`
   width: 100%;
   height: 250px;
+  margin-top: 10px;
 `;
 
 function LocationTab({ venueData }) {

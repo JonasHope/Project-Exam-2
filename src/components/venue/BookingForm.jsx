@@ -56,6 +56,7 @@ function BookingForm({
   venueData,
 }) {
   const [overlapError, setOverlapError] = useState("");
+  const [successBooking, setSuccessBooking] = useState("");
 
   const generateDisabledDates = () => {
     const disabledDates = [];
@@ -99,9 +100,11 @@ function BookingForm({
       );
 
       if (response.ok) {
-        console.log("Booking successful!");
+        setSuccessBooking(
+          "Your booking was successful! Check your profile to view or edit your bookings."
+        );
       } else {
-        console.error("Booking failed.");
+        setSuccessBooking("");
       }
     } catch (error) {
       console.error("An error occurred while making the booking:", error);
@@ -172,6 +175,7 @@ function BookingForm({
         </b>
       </SelectedBooking>
       <H3>Total: £{totalPrice},- </H3>
+      {successBooking}
       <ThemedButton onClick={handleBookingSubmit}>Book Venue</ThemedButton>
     </BookingContainer>
   );
