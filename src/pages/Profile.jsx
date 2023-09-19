@@ -3,6 +3,7 @@ import { StyleSheetManager } from "styled-components";
 import styled from "styled-components";
 import Width from "../styles/Width";
 import { fetchProfile } from "../API/apiUsers";
+import { updateAvatar } from "../API/apiChangeAvatar";
 
 const ProfileContainer = styled.div`
   padding: 10px;
@@ -22,11 +23,11 @@ const ProfileImageContainer = styled.div`
 const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10px 0px 0px 10px;
+  margin-left: 10px;
 `;
 
 const H1 = styled.h1`
-  margin: 5px 0px;
+  margin: 15px 0px;
   font-size: 1.3rem;
 `;
 
@@ -75,6 +76,7 @@ const ChangeAvatarButton = styled.button`
 function ProfilePage() {
   const [user, setUser] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
+  const [newAvatar, setNewAvatar] = useState("");
 
   useEffect(() => {
     async function fetchUser() {
@@ -94,6 +96,23 @@ function ProfilePage() {
     setProfileImage(user?.avatar);
   }, [user?.avatar]);
 
+  const handleAvatarUpdate = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("Access token not found in local storage.");
+      }
+
+      await updateAvatar(accessToken, newAvatar); // Call the API with the new avatar URL
+
+      // Fetch the user data again to update the profile image
+      const updatedUserData = await fetchProfile();
+      setProfileImage(updatedUserData?.avatar);
+    } catch (error) {
+      console.error("Error updating avatar", error);
+    }
+  };
+
   return (
     <StyleSheetManager shouldForwardProp={(prop) => !["image"].includes(prop)}>
       <ProfileContainer>
@@ -105,9 +124,16 @@ function ProfilePage() {
                 <ChangeAvatarForm>
                   <ChangeAvatarInput
                     type="text"
+                    value={newAvatar} // Bind the input value to the state
+                    onChange={(e) => setNewAvatar(e.target.value)} // Update the newAvatar state
                     placeholder="Image URL"
                   ></ChangeAvatarInput>
-                  <ChangeAvatarButton>Change Avatar</ChangeAvatarButton>
+                  <ChangeAvatarButton
+                    type="button"
+                    onClick={handleAvatarUpdate}
+                  >
+                    Change Avatar
+                  </ChangeAvatarButton>
                 </ChangeAvatarForm>
               </ProfileImageContainer>
               <ProfileInfo>

@@ -1,6 +1,6 @@
 import { BASE_URL } from "./apiConsts";
 
-const Profile_URL = "/profiles";
+const profile_URL = "/profiles";
 const BookingAndVenue = "/?_bookings=true&_venues=true"
 
 const userString = localStorage.getItem("user");
@@ -11,7 +11,7 @@ export async function fetchProfile() {
 
   const name = fetchName;
 
-  const url = `${BASE_URL}${Profile_URL}/${name}${BookingAndVenue}`;
+  const url = `${BASE_URL}${profile_URL}/${name}${BookingAndVenue}`;
 
   const accessToken = localStorage.getItem("accessToken");
 
