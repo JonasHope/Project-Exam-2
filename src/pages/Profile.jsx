@@ -7,6 +7,11 @@ const ProfileContainer = styled.div`
   padding: 10px;
 `;
 
+const ProfileInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 function ProfilePage() {
   const [user, setUser] = useState(null);
 
@@ -27,9 +32,17 @@ function ProfilePage() {
   return (
     <ProfileContainer>
       <Width>
-        <div>
-          <h1>{user.name}</h1>
-        </div>
+        {user ? (
+          <>
+            <ProfileInfo>
+              <h1>{user.name}</h1>
+              <span>{user.email}</span>
+              <span>{user.venueManager && <span>Venue Manager</span>}</span>
+            </ProfileInfo>
+          </>
+        ) : (
+          <p>Loading user data...</p>
+        )}
       </Width>
     </ProfileContainer>
   );

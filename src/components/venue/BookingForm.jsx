@@ -19,10 +19,10 @@ const H3 = styled.h3`
 
 const Select = styled.select`
   cursor: pointer;
-  background-color: ${(props) => props.theme.color.c5};
+  background-color: inherit;
   padding: 5px 10px;
   border-radius: 5px;
-  border: 1px solid ${(props) => props.theme.color.c1};
+  border: 1px solid ${(props) => props.theme.color.c3};
   font-size: 1rem;
 `;
 
@@ -44,6 +44,13 @@ const OverlappMessage = styled.p`
   padding: 5px;
 `;
 
+const SuccessMsg = styled.div`
+  padding: 10px;
+  background-color: green;
+  margin: 10px 0px;
+  color: white;
+`;
+
 function BookingForm({
   selectedGuests,
   setSelectedGuests,
@@ -57,6 +64,7 @@ function BookingForm({
 }) {
   const [overlapError, setOverlapError] = useState("");
   const [successBooking, setSuccessBooking] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const generateDisabledDates = () => {
     const disabledDates = [];
@@ -72,8 +80,9 @@ function BookingForm({
     return disabledDates;
   };
 
-  const handleBookingSubmit = async () => {
+  const handleBookingSubmit = async (event) => {
     try {
+      event.preventDefault();
       const accessToken = localStorage.getItem("accessToken");
 
       if (!dateRange[0] || !dateRange[1]) {
@@ -101,13 +110,15 @@ function BookingForm({
 
       if (response.ok) {
         setSuccessBooking(
-          "Your booking was successful! Check your profile to view or edit your bookings."
+          "Your booking was successful! Click here to view your bookings."
         );
       } else {
         setSuccessBooking("");
       }
     } catch (error) {
       console.error("An error occurred while making the booking:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -130,7 +141,7 @@ function BookingForm({
   };
 
   return (
-    <BookingContainer>
+    <BookingContainer onSubmit={handleBookingSubmit}>
       <H2>Booking</H2>
       <h3>Choose guest count</h3>
       <Select
@@ -175,8 +186,16 @@ function BookingForm({
         </b>
       </SelectedBooking>
       <H3>Total: £{totalPrice},- </H3>
-      {successBooking}
-      <ThemedButton onClick={handleBookingSubmit}>Book Venue</ThemedButton>
+      {successBooking ? (
+        <a href="/Profile">
+          <SuccessMsg>{successBooking}</SuccessMsg>
+        </a>
+      ) : (
+        <div className="error"></div>
+      )}
+      <ThemedButton type="submit" disabled={loading}>
+        {loading ? "Booking in progress..." : "Book Venue"}
+      </ThemedButton>
     </BookingContainer>
   );
 }

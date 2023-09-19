@@ -32,6 +32,7 @@ const BookingInfoContainer = styled.div`
 
   ${(props) => props.theme.media.desktop} {
     width: 70%;
+    margin-bottom: 30px;
   }
 `;
 

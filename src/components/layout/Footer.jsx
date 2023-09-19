@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 
 const SiteFooter = styled.footer`
-  background-color: ${(props) => props.theme.color.c3};
+  background-color: ${(props) => props.theme.color.c5};
   margin-top: auto;
   text-align: center;
 `;
@@ -10,7 +10,7 @@ const SiteFooter = styled.footer`
 const FooterDiv = styled.div``;
 
 const StyledP = styled.p`
-  color: ${(props) => props.theme.color.c5};
+  color: ${(props) => props.theme.color.c3};
 `;
 
 function Footer() {
