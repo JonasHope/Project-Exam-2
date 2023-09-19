@@ -103,9 +103,8 @@ function ProfilePage() {
         throw new Error("Access token not found in local storage.");
       }
 
-      await updateAvatar(accessToken, newAvatar); // Call the API with the new avatar URL
+      await updateAvatar(accessToken, newAvatar);
 
-      // Fetch the user data again to update the profile image
       const updatedUserData = await fetchProfile();
       setProfileImage(updatedUserData?.avatar);
     } catch (error) {
@@ -124,8 +123,8 @@ function ProfilePage() {
                 <ChangeAvatarForm>
                   <ChangeAvatarInput
                     type="text"
-                    value={newAvatar} // Bind the input value to the state
-                    onChange={(e) => setNewAvatar(e.target.value)} // Update the newAvatar state
+                    value={newAvatar}
+                    onChange={(e) => setNewAvatar(e.target.value)}
                     placeholder="Image URL"
                   ></ChangeAvatarInput>
                   <ChangeAvatarButton
