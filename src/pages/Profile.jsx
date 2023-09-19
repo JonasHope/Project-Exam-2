@@ -142,7 +142,7 @@ function ProfilePage() {
               </ProfileInfo>
             </ProfileInfoContainer>
           ) : (
-            <p>(temp, Remember to add loader here)</p>
+            <p>(Remember to add loader here)</p>
           )}
         </Width>
       </ProfileContainer>
