@@ -12,8 +12,19 @@ const ProfileInfo = styled.div`
   flex-direction: column;
 `;
 
+const ProfileImageContainer = styled.div`
+  background-image: url(${(props) => props.image});
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center;
+  background-size: cover;
+`;
+
 function ProfilePage() {
   const [user, setUser] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
     async function fetchUser() {
@@ -29,11 +40,18 @@ function ProfilePage() {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    if (user.avatar > 0) {
+      setProfileImage(user?.avatar);
+    }
+  }, [user?.avatar]);
+
   return (
     <ProfileContainer>
       <Width>
         {user ? (
           <>
+            <ProfileImageContainer image={profileImage}></ProfileImageContainer>
             <ProfileInfo>
               <h1>{user.name}</h1>
               <span>{user.email}</span>
@@ -41,7 +59,7 @@ function ProfilePage() {
             </ProfileInfo>
           </>
         ) : (
-          <p>Loading user data...</p>
+          <p>(temp, Remember to add loader here)</p>
         )}
       </Width>
     </ProfileContainer>
