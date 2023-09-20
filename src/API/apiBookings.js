@@ -24,7 +24,7 @@ export async function fetchBookings() {
   return json;
 }
 
-export async function fetchBooking(id) {
+export async function deleteBooking(id) {
   if (!id) {
     throw new Error("Missing venue ID");
   }
@@ -44,16 +44,16 @@ export async function fetchBooking(id) {
   };
 
   const requestOptions = {
-    method: "GET", 
+    method: "DELETE", 
     headers,
   };
 
   const response = await fetch(url, requestOptions);
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch booking: ${response.statusText}`);
+    throw new Error(`Failed to delete booking: ${response.statusText}`);
   }
 
-  const json = await response.json();
-  return json;
+  
+  return 
 }
