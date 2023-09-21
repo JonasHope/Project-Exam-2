@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ThemedButton from "../../styles/Button";
 import { deleteBooking } from "../../API/apiBookings";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRemove } from "@fortawesome/free-solid-svg-icons";
+import UpdateBookingModal from "./UpdateBooking";
 
 const ProfileBookingContainer = styled.div`
   padding: 10px;
@@ -75,6 +78,15 @@ const ModalForBookingDeletion = styled.div`
   padding: 20px;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledThemedButton = styled(ThemedButton)`
+  background-color: darkred;
+`;
+
 function formatDates(dateFrom, dateTo) {
   const startDate = new Date(dateFrom);
   const endDate = new Date(dateTo);
@@ -93,6 +105,7 @@ function ProfileBookingInfo({ user }) {
   const [bookings, setBookings] = useState(user?.bookings || []);
   const [selectedBookingId, setSelectedBookingId] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  console.log(bookings);
 
   const openDeleteModal = (bookingId) => {
     setSelectedBookingId(bookingId);
@@ -144,25 +157,28 @@ function ProfileBookingInfo({ user }) {
             </BookedVenues>
             <BookedOptions>
               <OpenDeleteModal onClick={() => openDeleteModal(bookingData.id)}>
-                x
+                <FontAwesomeIcon icon={faRemove}></FontAwesomeIcon>
               </OpenDeleteModal>
-              <ThemedButton>Update Booking</ThemedButton>
+              <UpdateBookingModal
+                setBookings={setBookings}
+                bookingId={bookingData.id}
+              />
             </BookedOptions>
           </BookingCards>
           <hr />
         </div>
       ))}
       {isDeleteModalOpen && (
-        <ModalContainer className="delete-modal">
+        <ModalContainer>
           <ModalForBookingDeletion>
             <h3>Delete Booking</h3>
             <p>Are you sure you want to delete this booking?</p>
-            <div>
-              <ThemedButton onClick={handleDeleteBooking}>
+            <ButtonContainer>
+              <StyledThemedButton onClick={handleDeleteBooking}>
                 Delete Booking
-              </ThemedButton>
+              </StyledThemedButton>
               <ThemedButton onClick={closeDeleteModal}>Close</ThemedButton>
-            </div>
+            </ButtonContainer>
           </ModalForBookingDeletion>
         </ModalContainer>
       )}

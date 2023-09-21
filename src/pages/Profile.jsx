@@ -5,6 +5,7 @@ import Width from "../styles/Width";
 import ProfileAccountInfo from "../components/profile/ProfileAccountinInformation";
 import ProfileBookingInfo from "../components/profile/ProfileBookingInformation";
 import { fetchProfile } from "../API/apiUsers";
+import ProfileTabGroup from "../components/profile/ProfileTabs";
 
 const ProfileContainer = styled.div`
   padding: 10px;
@@ -38,7 +39,7 @@ function ProfilePage() {
         <Width>
           <ProfileAccountInfo user={user} />
           <BookingAndVenueContainer>
-            <ProfileBookingInfo user={user} />
+            <ProfileTabGroup user={user} />
           </BookingAndVenueContainer>
         </Width>
       </ProfileContainer>
