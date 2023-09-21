@@ -3,7 +3,6 @@ import { StyleSheetManager } from "styled-components";
 import styled from "styled-components";
 import Width from "../styles/Width";
 import ProfileAccountInfo from "../components/profile/ProfileAccountinInformation";
-import ProfileBookingInfo from "../components/profile/ProfileBookingInformation";
 import { fetchProfile } from "../API/apiUsers";
 import ProfileTabGroup from "../components/profile/ProfileTabs";
 
