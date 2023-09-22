@@ -149,7 +149,9 @@ function Header() {
   };
 
   return (
-    <StyleSheetManager shouldForwardProp={(prop) => !["isOpen"].includes(prop)}>
+    <StyleSheetManager
+      shouldForwardProp={(prop) => !["isOpen", "showOnMobile"].includes(prop)}
+    >
       <MyHeader>
         <Nav>
           <Link to="/">
