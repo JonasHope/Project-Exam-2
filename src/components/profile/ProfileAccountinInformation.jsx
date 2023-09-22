@@ -5,8 +5,8 @@ import { updateAvatar } from "../../API/apiChangeAvatar";
 
 const ProfileInfoContainer = styled.div`
   display: flex;
-  align-items: flex-top;
   margin: 20px 0px;
+  padding: 10px;
 `;
 
 const ProfileImageContainer = styled.div`

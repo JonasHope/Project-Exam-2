@@ -7,7 +7,7 @@ import { fetchProfile } from "../API/apiUsers";
 import ProfileTabGroup from "../components/profile/ProfileTabs";
 
 const ProfileContainer = styled.div`
-  padding: 10px;
+  background-color: ${(props) => props.theme.color.c2};
 `;
 
 const BookingAndVenueContainer = styled.div`

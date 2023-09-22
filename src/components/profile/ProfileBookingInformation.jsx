@@ -8,6 +8,8 @@ import UpdateBookingModal from "./UpdateBooking";
 
 const ProfileBookingContainer = styled.div`
   padding: 10px;
+  margin: 10px;
+  min-height: 100vh;
 `;
 
 const BookedVenues = styled.div`
@@ -18,13 +20,23 @@ const BookedVenues = styled.div`
 const BookingCards = styled.div`
   display: flex;
   justify-content: space-between;
+
+  ${(props) => props.theme.media.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const BookedOptions = styled.div`
+  margin: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+
+  ${(props) => props.theme.media.mobile} {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
 `;
 
 const VenueBookingImage = styled.div`
@@ -76,6 +88,7 @@ const ModalForBookingDeletion = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
   padding: 20px;
+  margin: 10px;
 `;
 
 const ButtonContainer = styled.div`
@@ -105,7 +118,6 @@ function ProfileBookingInfo({ user }) {
   const [bookings, setBookings] = useState(user?.bookings || []);
   const [selectedBookingId, setSelectedBookingId] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  console.log(bookings);
 
   const openDeleteModal = (bookingId) => {
     setSelectedBookingId(bookingId);

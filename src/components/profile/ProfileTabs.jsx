@@ -1,26 +1,28 @@
 import React, { useState } from "react";
 import styled, { StyleSheetManager } from "styled-components";
 import ProfileBookingInfo from "./ProfileBookingInformation";
+import ProfileVenues from "./ProfileVenues";
 
 const Tab = styled.button`
   font-size: 20px;
-  padding: 10px 60px;
+  padding: 10px 30px;
   cursor: pointer;
-  opacity: 0.6;
-  background: white;
+  background-color: ${(props) => props.theme.color.c2}
   border: 0;
+  border-radius: 5px 5px 0px 0px;
   outline: 0;
+  
 
   ${({ active }) =>
     active &&
     `
-    border-bottom: 2px solid black;
-    opacity:1;
+    background-color: white;
+    
     `}
 `;
 
 const ButtonGroup = styled.div`
-  display: flex;
+  background-color: ${(props) => props.theme.color.c2};
 `;
 
 const types = ["Bookings", "Venues"];
@@ -32,6 +34,9 @@ function ProfileTabGroup({ user }) {
   switch (active) {
     case "Bookings":
       content = <ProfileBookingInfo user={user} />;
+      break;
+    case "Venues":
+      content = <ProfileVenues user={user} />;
       break;
     default:
       content = null;
