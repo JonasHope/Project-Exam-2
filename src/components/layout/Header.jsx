@@ -89,17 +89,22 @@ const DropdownMenu = styled.div`
   display: ${(props) => (props.isOpen ? "block" : "none")};
 `;
 
+const StyledLink = styled(Link)`
+  color: white;
+`;
+
 const DropdownMenuItem = styled.div`
   padding: 10px 30px;
   cursor: pointer;
+
   &:hover {
     background-color: ${(props) => props.theme.color.c1};
     color: ${(props) => props.theme.color.c4};
-  }
-`;
 
-const StyledLink = styled(Link)`
-  color: white;
+    ${StyledLink} {
+      color: ${(props) => props.theme.color.c4};
+    }
+  }
 `;
 
 const Hamburger = styled.span`
