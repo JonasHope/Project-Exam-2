@@ -8,59 +8,103 @@ const InputsContainer = styled.div`
   align-items: center;
   padding: 20px 10px;
   border-radius: 10px;
+  gap: 20px;
 `;
 
 const InputContent = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
+`;
+const inputStyles = `
+  border: none;
+  margin: 10px 0px;
+  padding: 10px;
+  background-color: transparent;
+  border-bottom: 2px solid black;
+  transition: border-color 0.3s ease-in-out;
+  font-size: 16px;
+  
+  &:hover {
+    background-color: ${(props) => props.theme.color.c2};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: orange;
+  }
+
+  &::placeholder {
+    color: ${(props) => props.theme.color.c4};
+  }
 `;
 
 const Input = styled.input`
-  border: none;
-  margin: 10px 0px;
-  padding: 10px;
-  border-bottom: 1px solid ${(props) => props.theme.color.c3};
-  background-color: ${(props) => props.theme.color.c2};
-  border-radius: 5px;
+  ${inputStyles}
 `;
 
 const Textarea = styled.textarea`
-  border: none;
-  margin: 10px 0px;
-  padding: 10px;
-  border-bottom: 1px solid ${(props) => props.theme.color.c3};
-  background-color: ${(props) => props.theme.color.c2};
-  border-radius: 5px;
+  ${inputStyles}
+
+  min-height: 100px;
   resize: none;
 `;
 
-function BasicInformation() {
+const Label = styled.label`
+  font-size: 16px;
+  font-weight: bold;
+  color: ${(props) => props.theme.color.c3};
+`;
+
+const H2 = styled.h2`
+  color: ${(props) => props.theme.color.c6};
+`;
+
+function BasicInformation({ data, onUpdate }) {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    onUpdate("basic", { ...data, [name]: value });
+  };
   return (
     <InputsContainer>
+      <H2>Basic Information</H2>
       <InputContent>
-        <label htmlFor="name">Venue name</label>
-        <Input type="text" name="name" id="name" placeholder="Name"></Input>
-        <label htmlFor="maxGuests">Set a max guest number</label>
+        <Label htmlFor="name">Venue name</Label>
+        <Input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Name"
+          value={data.name}
+          onChange={handleInputChange}
+        />
+        <Label htmlFor="maxGuests">Set a max guest number</Label>
         <Input
           type="number"
           name="maxGuests"
           id="maxGuests"
           placeholder="Max guests"
-        ></Input>
-        <label htmlFor="price">Set a price</label>
+          value={data.maxGuests}
+          onChange={handleInputChange}
+        />
+        <Label htmlFor="price">Set a price</Label>
         <Input
           type="number"
           name="price"
           id="price"
           placeholder="Price"
-        ></Input>
-        <label htmlFor="description">Write a description of the venue</label>
+          value={data.price}
+          onChange={handleInputChange}
+        />
+        <Label htmlFor="description">Write a description of the venue</Label>
         <Textarea
           name="description"
           id="description"
           placeholder="Description"
           rows="5"
-        ></Textarea>
+          value={data.description}
+          onChange={handleInputChange}
+        />
       </InputContent>
     </InputsContainer>
   );

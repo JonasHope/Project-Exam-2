@@ -9,6 +9,7 @@ import ThemedButton from "../styles/Button";
 
 const CreateVenueContainer = styled.div`
   padding: 10px;
+  min-height: 100vh;
 `;
 
 const ButtonGroup = styled.div`
@@ -26,10 +27,128 @@ const StyledThemedButton = styled(ThemedButton)`
   }
 `;
 
-const types = ["Basic", "Metas", "Images", "Location"];
+const ChangeTab = styled.div`
+  margin: 0px 70px;
+  font-weight: bold;
+  padding: 5px;
+  border-bottom: 2px solid black;
+
+  &[disabled] {
+    color: ${(props) => props.theme.color.c4};
+    cursor: not-allowed;
+    border-bottom: 2px solid grey;
+  }
+`;
+
+const SuccessMsg = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: green;
+  color: ${(props) => props.theme.color.c5};
+`;
+
+const FailMsg = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  color: red;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const types = ["Basic", "Metas", "Location", "Images"];
 
 function CreateVenue() {
   const [active, setActive] = useState(types[0]);
+  const [venueCreatedSuccess, setVenueCreatedSuccess] = useState("");
+  const [venueId, setVenueId] = useState("");
+  const [failResponse, setFailResponse] = useState("");
+  const [formData, setFormData] = useState({
+    basic: {
+      name: "",
+      maxGuests: "",
+      price: "",
+      description: "",
+    },
+    metas: {
+      wifi: false,
+      parking: false,
+      breakfast: false,
+      pets: false,
+    },
+    media: [],
+    location: {
+      address: "",
+      city: "",
+      zip: "",
+      country: "",
+      continent: "",
+      lat: "",
+      lng: "",
+    },
+  });
+
+  async function createVenue() {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      const apiUrl = "https://api.noroff.dev/api/v1/holidaze/venues";
+
+      const formattedData = {
+        name: formData.basic.name,
+        description: formData.basic.description,
+        media: formData.media,
+        price: parseFloat(formData.basic.price),
+        maxGuests: parseInt(formData.basic.maxGuests),
+        rating: 5,
+        meta: {
+          wifi: formData.metas.wifi,
+          parking: formData.metas.parking,
+          breakfast: formData.metas.breakfast,
+          pets: formData.metas.pets,
+        },
+        location: {
+          address: formData.location.address,
+          city: formData.location.city,
+          zip: formData.location.zip,
+          country: formData.location.country,
+          continent: formData.location.continent,
+          lat: parseFloat(formData.location.lat),
+          lng: parseFloat(formData.location.lng),
+        },
+      };
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(formattedData),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        const venueId = responseData.id;
+        setVenueCreatedSuccess(
+          "Your Venue was successfully created! Click here to view the Venue"
+        );
+        setVenueId(venueId);
+      } else {
+        const failedResponse = await response.json();
+        const failMessages = failedResponse.errors.map((error, index) => (
+          <div key={index}>{error.message}</div>
+        ));
+        setFailResponse(failMessages);
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
+  }
+
+  const updateFormData = (section, data) => {
+    setFormData({ ...formData, [section]: data });
+  };
 
   const handleNext = () => {
     const currentIndex = types.indexOf(active);
@@ -50,20 +169,20 @@ function CreateVenue() {
     case "Basic":
       content = (
         <>
-          <BasicInformation />
+          <BasicInformation data={formData.basic} onUpdate={updateFormData} />
           <ButtonGroup>
-            <StyledThemedButton
+            <ChangeTab
               onClick={handleBack}
               disabled={types.indexOf(active) === 0}
             >
               Back
-            </StyledThemedButton>
-            <StyledThemedButton
+            </ChangeTab>
+            <ChangeTab
               onClick={handleNext}
               disabled={types.indexOf(active) === types.length - 1}
             >
               Next
-            </StyledThemedButton>
+            </ChangeTab>
           </ButtonGroup>
         </>
       );
@@ -71,41 +190,20 @@ function CreateVenue() {
     case "Metas":
       content = (
         <>
-          <CreateMetas />
+          <CreateMetas data={formData.metas} onUpdate={updateFormData} />
           <ButtonGroup>
-            <StyledThemedButton
+            <ChangeTab
               onClick={handleBack}
               disabled={types.indexOf(active) === 0}
             >
               Back
-            </StyledThemedButton>
-            <StyledThemedButton
+            </ChangeTab>
+            <ChangeTab
               onClick={handleNext}
               disabled={types.indexOf(active) === types.length - 1}
             >
               Next
-            </StyledThemedButton>
-          </ButtonGroup>
-        </>
-      );
-      break;
-    case "Images":
-      content = (
-        <>
-          <CreateImages />
-          <ButtonGroup>
-            <StyledThemedButton
-              onClick={handleBack}
-              disabled={types.indexOf(active) === 0}
-            >
-              Back
-            </StyledThemedButton>
-            <StyledThemedButton
-              onClick={handleNext}
-              disabled={types.indexOf(active) === types.length - 1}
-            >
-              Next
-            </StyledThemedButton>
+            </ChangeTab>
           </ButtonGroup>
         </>
       );
@@ -113,20 +211,41 @@ function CreateVenue() {
     case "Location":
       content = (
         <>
-          <CreateLocation />
+          <CreateLocation data={formData.location} onUpdate={updateFormData} />
           <ButtonGroup>
-            <StyledThemedButton
+            <ChangeTab
               onClick={handleBack}
               disabled={types.indexOf(active) === 0}
             >
               Back
-            </StyledThemedButton>
-            <StyledThemedButton
+            </ChangeTab>
+            <ChangeTab
               onClick={handleNext}
               disabled={types.indexOf(active) === types.length - 1}
             >
               Next
-            </StyledThemedButton>
+            </ChangeTab>
+          </ButtonGroup>
+        </>
+      );
+      break;
+    case "Images":
+      content = (
+        <>
+          <CreateImages data={formData} onUpdate={updateFormData} />
+          <ButtonGroup>
+            <ChangeTab
+              onClick={handleBack}
+              disabled={types.indexOf(active) === 0}
+            >
+              Back
+            </ChangeTab>
+            <ChangeTab
+              onClick={handleNext}
+              disabled={types.indexOf(active) === types.length - 1}
+            >
+              Next
+            </ChangeTab>
           </ButtonGroup>
         </>
       );
@@ -135,6 +254,11 @@ function CreateVenue() {
       content = null;
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createVenue();
+  };
+
   return (
     <StyleSheetManager shouldForwardProp={(prop) => !["active"].includes(prop)}>
       <CreateVenueContainer>
@@ -142,7 +266,28 @@ function CreateVenue() {
           <div>
             <h1>Set up your venue</h1>
           </div>
-          <div>{content}</div>
+          <div>
+            <form onSubmit={handleSubmit}>
+              {content}
+              {venueCreatedSuccess ? (
+                <a href={`/Venue/${venueId}`}>
+                  <SuccessMsg>{venueCreatedSuccess}</SuccessMsg>
+                </a>
+              ) : (
+                <div>
+                  <FailMsg>{failResponse}</FailMsg>
+                </div>
+              )}
+              <ButtonGroup>
+                <StyledThemedButton
+                  type="submit"
+                  disabled={[0, 1, 2].includes(types.indexOf(active))}
+                >
+                  Submit
+                </StyledThemedButton>
+              </ButtonGroup>
+            </form>
+          </div>
         </Width>
       </CreateVenueContainer>
     </StyleSheetManager>
