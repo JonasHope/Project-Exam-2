@@ -1,8 +1,8 @@
 import { BASE_URL } from "./apiConsts";
 
-const Venue_URL = "/venue"
+const Venue_URL = "/venues"
 
-export async function deleteBooking(id) {
+export async function deleteVenue(id) {
   if (!id) {
     throw new Error("Missing venue ID");
   }

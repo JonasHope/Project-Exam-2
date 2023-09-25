@@ -1,6 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import styled, { StyleSheetManager } from "styled-components";
 import ThemedButton from "../../styles/Button";
+import { deleteVenue } from "../../API/apiDeleteVenue";
 
 const ProfileVenuesContainer = styled.div`
   min-height: 100vh;
@@ -24,26 +25,102 @@ const H2 = styled.h2`
 
 const Location = styled.span``;
 
+const ModalBackdrop = styled.div`
+  display: ${(props) => (props.visible ? "block" : "none")};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+`;
+
+const DeleteConfirmationModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  z-index: 1001;
+`;
+
+const TheButtons = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const StyledThemedButton = styled(ThemedButton)`
+  background-color: darkred;
+`;
+
 function ProfileVenues({ user }) {
-  console.log(user);
+  const [venueToDelete, setVenueToDelete] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [venues, setVenues] = useState(user.venues);
+
+  useEffect(() => {
+    setVenues(user.venues);
+  }, [user.venues]);
+
+  const handleDeleteClick = (venueId) => {
+    setVenueToDelete(venueId);
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await deleteVenue(venueToDelete);
+      setShowDeleteModal(false);
+      setVenues((prevVenues) =>
+        prevVenues.filter((venue) => venue.id !== venueToDelete)
+      );
+    } catch (error) {
+      console.error("Failed to delete venue:", error);
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setShowDeleteModal(false);
+    setVenueToDelete(null);
+  };
 
   return (
-    <>
+    <StyleSheetManager
+      shouldForwardProp={(prop) => !["visible"].includes(prop)}
+    >
       <ProfileVenuesContainer>
-        <>
-          {user.venues.map((profileVenueData) => (
-            <ProfileVenue key={profileVenueData.id}>
+        {venues.map((profileVenueData) => (
+          <div key={profileVenueData.id}>
+            <ProfileVenue>
               <div>
                 <H2>{profileVenueData.name}</H2>
                 <Location>{profileVenueData.location.city}</Location>
               </div>
-              <ThemedButton>Update Venue</ThemedButton>
+              <StyledThemedButton
+                onClick={() => handleDeleteClick(profileVenueData.id)}
+              >
+                Delete Venue
+              </StyledThemedButton>
             </ProfileVenue>
-          ))}
-          <hr />
-        </>
+            <hr />
+          </div>
+        ))}
       </ProfileVenuesContainer>
-    </>
+
+      <ModalBackdrop visible={showDeleteModal}>
+        <DeleteConfirmationModal>
+          <p>Are you sure you want to delete this venue?</p>
+          <TheButtons>
+            <StyledThemedButton onClick={handleDeleteConfirm}>
+              Yes
+            </StyledThemedButton>
+            <ThemedButton onClick={handleDeleteCancel}>No</ThemedButton>
+          </TheButtons>
+        </DeleteConfirmationModal>
+      </ModalBackdrop>
+    </StyleSheetManager>
   );
 }
 
