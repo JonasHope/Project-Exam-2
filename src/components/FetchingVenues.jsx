@@ -1,30 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faWifi,
-  faCar,
-  faDog,
-  faCoffee,
-} from "@fortawesome/free-solid-svg-icons";
 import { fetchVenues } from "../API/apiVenues";
 
 const VenuesContainer = styled.div`
-  background-color: ${(props) => props.theme.color.c5};
-  border-radius: 10px;
-  padding: 10px 30px;
+  padding: 10px;
+`;
+
+const StyledLink = styled(Link)`
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const VenuesContent = styled.div`
   display: flex;
-  border-radius: 10px;
+  border-radius: 5px;
   margin: 20px 0px;
   justify-content: space-between;
   box-shadow: 0px 0px 6px rgb(239, 243, 246);
   background-color: white;
   transition: color 0.3s, transform 0.3s;
+  min-width: 80%;
 
   &:hover {
     background-color: ${(props) => props.theme.color.c2};
@@ -39,16 +35,13 @@ const VenueName = styled.h2`
 `;
 
 const VenueImage = styled.div`
+  background-image: url(${(props) => props.image});
   width: 300px;
-  height: 300px;
-  border-radius: 5px;
-  overflow: hidden;
-`;
-
-const Featimg = styled.img`
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
+  height: 200px;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 5px 0px 0px 5px;
 `;
 
 const VenueText = styled.div`
@@ -60,38 +53,17 @@ const VenueText = styled.div`
   width: 200px;
 `;
 
-const VenueCountry = styled.span``;
-
-const Metas = styled.div`
-  display: flex;
-  align-items: flex-start;
+const VenueCountry = styled.div`
+  background-color: ${(props) => props.theme.color.c6};
+  color: ${(props) => props.theme.color.c5};
+  padding: 5px 10px;
+  border-radius: 5px 0px 5px 0px;
+  box-shadow: 1px 1px 6px ${(props) => props.theme.color.c5};
+  width: fit-content;
 `;
 
-const IconColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: ${(props) => props.theme.color.c7};
-`;
-
-const TextColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 10px;
-  font-size: 0.8rem;
-`;
-
-const IconSpace = styled.div`
-  padding: 8px 0;
-`;
-
-const IconTextSpace = styled.div`
-  padding: 5px 0;
-`;
-
-const VenueMeta = styled.div`
-  color: ${(props) => props.theme.color.c3};
+const Country = styled.p`
+  margin: 0px;
 `;
 
 const VenueDescription = styled.p`
@@ -102,13 +74,17 @@ const VenueDescription = styled.p`
   color: ${(props) => props.theme.color.c4};
 `;
 
-const VenuePrice = styled.p`
+const VenuePriceContainer = styled.p`
+  color: ${(props) => props.theme.color.c3};
   display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   align-items: flex-end;
-  margin: 16px;
-  padding: 5px;
+  padding: 10px;
+`;
+
+const Price = styled.b`
   font-size: 1.2rem;
-  color: ${(props) => props.theme.color.c7};
 `;
 
 const CardSplitter = styled.div`
@@ -149,70 +125,30 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
   return (
     <VenuesContainer>
       {venues.map((venue) => (
-        <Link to={`/Venue/${venue.id}`} key={venue.id}>
+        <StyledLink to={`/Venue/${venue.id}`} key={venue.id}>
           <VenuesContent>
             <CardSplitter>
-              <VenueImage>
-                <Featimg
-                  src={venue.media[0]}
-                  alt={venue.name}
-                  onError={(e) => {
-                    e.target.src =
-                      "https://i.ytimg.com/vi/x6WcmrcQyaM/maxresdefault.jpg";
-                  }}
-                ></Featimg>
+              <VenueImage image={venue.media[0]}>
+                <VenueCountry>
+                  <Country>{venue.location.country}</Country>
+                </VenueCountry>
               </VenueImage>
               <VenueText>
                 <div>
                   <VenueName>{venue.name}</VenueName>
-                  <VenueCountry>{venue.location.country}</VenueCountry>
                 </div>
-                <VenueMeta>
-                  <Metas>
-                    <IconColumn>
-                      <IconTextSpace>
-                        <FontAwesomeIcon icon={faUser} />
-                      </IconTextSpace>
-                      {venue.meta.wifi && (
-                        <IconTextSpace>
-                          <FontAwesomeIcon icon={faWifi} />
-                        </IconTextSpace>
-                      )}
-                      {venue.meta.parking && (
-                        <IconTextSpace>
-                          <FontAwesomeIcon icon={faCar} />
-                        </IconTextSpace>
-                      )}
-                      {venue.meta.breakfast && (
-                        <IconTextSpace>
-                          <FontAwesomeIcon icon={faCoffee} />
-                        </IconTextSpace>
-                      )}
-                      {venue.meta.pets && (
-                        <IconTextSpace>
-                          <FontAwesomeIcon icon={faDog} />
-                        </IconTextSpace>
-                      )}
-                    </IconColumn>
-                    <TextColumn>
-                      <IconSpace> {venue.maxGuests}</IconSpace>
-                      {venue.meta.wifi && <IconSpace>Wifi</IconSpace>}
-                      {venue.meta.parking && <IconSpace>Parking</IconSpace>}
-                      {venue.meta.breakfast && <IconSpace>Breakfast</IconSpace>}
-                      {venue.meta.pets && <IconSpace>Pets</IconSpace>}
-                    </TextColumn>
-                  </Metas>
-                </VenueMeta>
+                <VenueDescription>
+                  {maxDescriptionSize(venue.description)}
+                </VenueDescription>
               </VenueText>
             </CardSplitter>
-            <VenueDescription>
-              {maxDescriptionSize(venue.description)}
-            </VenueDescription>
-            <VenuePrice>
-              <b>Price: £{venue.price}</b>
-            </VenuePrice>
+
+            <VenuePriceContainer>
+              <Price>£ {venue.price}</Price>
+              <span>for 1 night per person</span>
+            </VenuePriceContainer>
           </VenuesContent>
-        </Link>
+        </StyledLink>
       ))}
     </VenuesContainer>
   );
