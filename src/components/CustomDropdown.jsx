@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import styled, { StyleSheetManager } from "styled-components";
 
 const CustomDropdownContainer = styled.div`
   display: inline-block;
@@ -81,39 +81,41 @@ function CustomDropdown({
   };
 
   return (
-    <CustomDropdownContainer ref={customDropdownRef}>
-      <Label htmlFor="customDropdown" onClick={toggleDropdown}>
-        {label} <b>{initialLabel}</b>
-      </Label>
-      <Select
-        id="customDropdown"
-        value={selectedOption}
-        onChange={handleSelectChange}
-        onClick={(e) => e.stopPropagation()}
-        onBlur={() => setIsOpen(false)}
-      >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </Select>
-      <DropdownOptions
-        className="placement"
-        isOpen={isOpen ? "true" : undefined}
-      >
-        {options.map((option) => (
-          <Option
-            key={option.value}
-            onClick={() =>
-              handleSelectChange({ target: { value: option.value } })
-            }
-          >
-            {option.label}
-          </Option>
-        ))}
-      </DropdownOptions>
-    </CustomDropdownContainer>
+    <StyleSheetManager shouldForwardProp={(prop) => !["isOpen"].includes(prop)}>
+      <CustomDropdownContainer ref={customDropdownRef}>
+        <Label htmlFor="customDropdown" onClick={toggleDropdown}>
+          {label} <b>{initialLabel}</b>
+        </Label>
+        <Select
+          id="customDropdown"
+          value={selectedOption}
+          onChange={handleSelectChange}
+          onClick={(e) => e.stopPropagation()}
+          onBlur={() => setIsOpen(false)}
+        >
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
+        <DropdownOptions
+          className="placement"
+          isOpen={isOpen ? "true" : undefined}
+        >
+          {options.map((option) => (
+            <Option
+              key={option.value}
+              onClick={() =>
+                handleSelectChange({ target: { value: option.value } })
+              }
+            >
+              {option.label}
+            </Option>
+          ))}
+        </DropdownOptions>
+      </CustomDropdownContainer>
+    </StyleSheetManager>
   );
 }
 
