@@ -81,12 +81,12 @@ const DropdownMenu = styled.div`
   position: absolute;
   top: 110%;
   right: 3%;
-
   background-color: ${(props) => props.theme.color.c4};
   color: ${(props) => props.theme.color.c5};
   box-shadow: 0px 3px 6px rgb(239, 243, 246);
   border-radius: 5px;
   display: ${(props) => (props.isOpen ? "block" : "none")};
+  z-index: 999;
 `;
 
 const StyledLink = styled(Link)`
