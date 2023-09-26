@@ -99,10 +99,7 @@ function CustomDropdown({
             </option>
           ))}
         </Select>
-        <DropdownOptions
-          className="placement"
-          isOpen={isOpen ? "true" : undefined}
-        >
+        <DropdownOptions isOpen={isOpen ? "true" : undefined}>
           {options.map((option) => (
             <Option
               key={option.value}

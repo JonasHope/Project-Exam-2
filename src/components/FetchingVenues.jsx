@@ -4,28 +4,49 @@ import { Link } from "react-router-dom";
 import { fetchVenues } from "../API/apiVenues";
 
 const VenuesContainer = styled.div`
-  padding: 10px;
+  padding: 5px
+  width: 50%
+
+  ${(props) => props.theme.media.desktop} {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 `;
 
 const StyledLink = styled(Link)`
   display: flex;
   justify-content: flex-end;
+
+  ${(props) => props.theme.media.desktop} {
+    margin: 0px 20px;
+  }
 `;
 
 const VenuesContent = styled.div`
   display: flex;
-  border-radius: 5px;
-  margin: 20px 0px;
+  border-radius: 20px;
+  margin: 5px 0px;
   justify-content: space-between;
-  box-shadow: 0px 0px 6px rgb(239, 243, 246);
+  box-shadow: 0px 0px 6px ${(props) => props.theme.color.c2};
   background-color: white;
   transition: color 0.3s, transform 0.3s;
-  min-width: 80%;
+  min-width: 100%;
 
   &:hover {
-    background-color: ${(props) => props.theme.color.c2};
+    box-shadow: 0px 0px 6px ${(props) => props.theme.color.c2};
     transform: scale(1.01);
   }
+
+  ${(props) => props.theme.media.desktop} {
+    flex-direction: column;
+    min-width: 200px;
+  }
+`;
+
+const NameAndCity = styled.div`
+  padding: 5px 10px;
 `;
 
 const VenueName = styled.h2`
@@ -36,28 +57,32 @@ const VenueName = styled.h2`
 
 const VenueImage = styled.div`
   background-image: url(${(props) => props.image});
-  width: 300px;
-  height: 200px;
+  width: 250px;
+  height: 150px;
   background-repeat: no-repeat, no-repeat;
   background-position: center;
   background-size: cover;
-  border-radius: 5px 0px 0px 5px;
+  border-radius: 20px 0px 0px 20px;
 `;
 
 const VenueText = styled.div`
-  padding: 5px 20px;
+  padding: 0px;
   color: ${(props) => props.theme.color.c4};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 200px;
+  max-width: 400px;
+
+  ${(props) => props.theme.media.desktop} {
+    max-width: 250px;
+  }
 `;
 
 const VenueCountry = styled.div`
   background-color: ${(props) => props.theme.color.c6};
   color: ${(props) => props.theme.color.c5};
   padding: 5px 10px;
-  border-radius: 5px 0px 5px 0px;
+  border-radius: 20px 0px 20px 0px;
   box-shadow: 1px 1px 6px ${(props) => props.theme.color.c5};
   width: fit-content;
 `;
@@ -66,21 +91,22 @@ const Country = styled.p`
   margin: 0px;
 `;
 
-const VenueDescription = styled.p`
-  width: 500px;
-  overflow: hidden;
+const VenueRating = styled.div`
   display: flex;
+
+  padding: 5px;
   align-items: center;
-  color: ${(props) => props.theme.color.c4};
+  color: ${(props) => props.theme.color.c3};
 `;
 
-const VenuePriceContainer = styled.p`
+const VenuePriceContainer = styled.div`
   color: ${(props) => props.theme.color.c3};
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
   padding: 10px;
+  font-size: 0.8rem;
 `;
 
 const Price = styled.b`
@@ -89,6 +115,23 @@ const Price = styled.b`
 
 const CardSplitter = styled.div`
   display: flex;
+
+  ${(props) => props.theme.media.desktop} {
+    flex-direction: column;
+  }
+`;
+
+const Rating = styled.div`
+  font-size: 0.8rem;
+  background-color: green;
+  color: ${(props) => props.theme.color.c5}
+  padding: 2px 5px;
+  border-radius: 5px;
+`;
+
+const RatingSpan = styled.span`
+  margin-left: 4px;
+  font-size: 0.8rem;
 `;
 
 function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
@@ -115,13 +158,6 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
     getVenues();
   }, [sortOrder, countryFilter, maxGuestsFilter]);
 
-  const maxDescriptionSize = (description) => {
-    const maxDescriptionLength = 200;
-    return description.length > maxDescriptionLength
-      ? description.slice(0, maxDescriptionLength) + "..."
-      : description;
-  };
-
   return (
     <VenuesContainer>
       {venues.map((venue) => (
@@ -134,12 +170,14 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
                 </VenueCountry>
               </VenueImage>
               <VenueText>
-                <div>
+                <NameAndCity>
                   <VenueName>{venue.name}</VenueName>
-                </div>
-                <VenueDescription>
-                  {maxDescriptionSize(venue.description)}
-                </VenueDescription>
+                  <span>{venue.location.city}</span>
+                </NameAndCity>
+                <VenueRating>
+                  <Rating>{venue.rating}</Rating>
+                  <RatingSpan>Rating</RatingSpan>
+                </VenueRating>
               </VenueText>
             </CardSplitter>
 
