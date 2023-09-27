@@ -103,6 +103,7 @@ const IconSpaceing = styled.div`
 const StyledThemedButton = styled(ThemedButton)`
   margin: 10px;
   border-radius: 50%;
+  width: 45px;
 
   ${(props) => props.theme.media.desktop} {
     margin: 2px;

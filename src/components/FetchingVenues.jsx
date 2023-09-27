@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { fetchVenues } from "../API/apiVenues";
+import Pagination from "./Pagination";
 
 const VenuesContainer = styled.div`
-  padding: 5px;
-  width: 80%;
+  margin-left: 20px;
 
   ${(props) => props.theme.media.desktop} {
     width: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin: auto;
   }
 `;
 
@@ -139,6 +140,8 @@ const RatingSpan = styled.span`
 
 function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
   const [venues, setVenues] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     async function getVenues() {
@@ -157,13 +160,20 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
       });
 
       setVenues(filteredVenues);
+
+      const calculatedTotalPages = Math.ceil(filteredVenues.length / 20);
+      setTotalPages(calculatedTotalPages);
     }
     getVenues();
   }, [sortOrder, countryFilter, maxGuestsFilter]);
 
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
   return (
     <VenuesContainer>
-      {venues.map((venue) => (
+      {venues.slice((currentPage - 1) * 20, currentPage * 20).map((venue) => (
         <StyledLink to={`/Venue/${venue.id}`} key={venue.id}>
           <VenuesContent>
             <CardSplitter>
@@ -191,6 +201,13 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
           </VenuesContent>
         </StyledLink>
       ))}
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </VenuesContainer>
   );
 }

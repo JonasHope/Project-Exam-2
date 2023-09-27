@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { styled, StyleSheetManager } from "styled-components";
 import logo from "../images/logo.png";
@@ -117,6 +117,7 @@ function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const accountInfo = localStorage.getItem("user");
@@ -126,10 +127,19 @@ function Header() {
       setScreenWidth(window.innerWidth);
     };
 
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        // Click occurred outside the dropdown, so close it
+        setIsDropdownOpen(false);
+      }
+    };
+
     window.addEventListener("resize", handleResize);
+    window.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -178,7 +188,7 @@ function Header() {
             </NavLinks>
           </NavUl>
           <LoginContainer>
-            <Dropdown>
+            <Dropdown ref={dropdownRef}>
               <DropdownButton onClick={toggleDropdown}>
                 <Hamburger>&#9776;</Hamburger>
               </DropdownButton>

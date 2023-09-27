@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchProfile } from "../../API/apiUsers";
 import { updateAvatar } from "../../API/apiChangeAvatar";
+import ThemedButton from "../../styles/Button";
 
 const ProfileInfoContainer = styled.div`
   display: flex;
@@ -50,34 +51,60 @@ const ProfileImage = styled.div`
   background-size: cover;
 `;
 
-const ChangeAvatarForm = styled.form`
-  margin-top: 5px;
-  display: flex;
-  flex-direction: column;
-`;
-
 const ChangeAvatarInput = styled.input`
-  max-width: 120px;
   padding: 5px;
   border: none;
   border-bottom: 1px solid ${(props) => props.theme.color.c6};
   background-color: inherit;
 `;
 
-const ChangeAvatarButton = styled.button`
-  margin-top: 5px;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  background-color: ${(props) => props.theme.color.c3};
-  color: ${(props) => props.theme.color.c5};
-  width: 130px;
+const ChangeAvatarButton = styled(ThemedButton)`
   font-size: 0.8rem;
+  margin: 10px 0px;
+`;
+
+const ModalBackdrop = styled.div`
+  display: ${(props) => (props.visible ? "flex" : "none")};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 200px;
+`;
+
+const CloseButton = styled(ThemedButton)`
+  background-color: ${(props) => props.theme.color.c4};
+  color: ${(props) => props.theme.color.c5};
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.c1};
+    color: ${(props) => props.theme.color.c3};
+  }
+`;
+
+const ChangeAvatarSpan = styled.span`
+  cursor: pointer;
 `;
 
 function ProfileAccountInfo({ user }) {
   const [profileImage, setProfileImage] = useState(null);
   const [newAvatar, setNewAvatar] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setProfileImage(user?.avatar);
@@ -94,9 +121,19 @@ function ProfileAccountInfo({ user }) {
 
       const updatedUserData = await fetchProfile();
       setProfileImage(updatedUserData?.avatar);
+      closeAvatarModal();
     } catch (error) {
       console.error("Error updating avatar", error);
     }
+  };
+
+  const openAvatarModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeAvatarModal = () => {
+    console.log("Closing modal");
+    setIsModalOpen(false);
   };
 
   return (
@@ -105,18 +142,9 @@ function ProfileAccountInfo({ user }) {
         <ProfileInfoContainer>
           <ProfileImageContainer>
             <ProfileImage image={profileImage} alt={user?.name}></ProfileImage>
-            <ChangeAvatarForm>
-              <ChangeAvatarInput
-                type="text"
-                name="media"
-                value={newAvatar}
-                onChange={(e) => setNewAvatar(e.target.value)}
-                placeholder="Image URL"
-              ></ChangeAvatarInput>
-              <ChangeAvatarButton type="button" onClick={handleAvatarUpdate}>
-                Change Avatar
-              </ChangeAvatarButton>
-            </ChangeAvatarForm>
+            <ChangeAvatarSpan onClick={openAvatarModal}>
+              Change Avatar?
+            </ChangeAvatarSpan>
           </ProfileImageContainer>
           <ProfileInfo>
             <H1>{user.name}</H1>
@@ -127,6 +155,21 @@ function ProfileAccountInfo({ user }) {
       ) : (
         <p>(Remember to add loader here)</p>
       )}
+      <ModalBackdrop visible={isModalOpen}>
+        <ModalContent>
+          <ChangeAvatarInput
+            type="text"
+            name="media"
+            value={newAvatar}
+            onChange={(e) => setNewAvatar(e.target.value)}
+            placeholder="Image URL"
+          ></ChangeAvatarInput>
+          <ChangeAvatarButton type="button" onClick={handleAvatarUpdate}>
+            Change Avatar
+          </ChangeAvatarButton>
+          <CloseButton onClick={closeAvatarModal}>Close</CloseButton>
+        </ModalContent>
+      </ModalBackdrop>
     </div>
   );
 }
