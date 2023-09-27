@@ -7,11 +7,13 @@ import Venues from './pages/Venues';
 import Venue from './pages/Venue';
 import ProfilePage from './pages/Profile';
 import CreateVenue from './pages/CreateVenue';
+import ScrollToTop from './components/ScrollUp';
 
 function App() {
   return (
     <BrowserRouter>
       <Header/>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/Venues" element={<Venues />}/>

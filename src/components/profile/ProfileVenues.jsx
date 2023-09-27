@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { StyleSheetManager } from "styled-components";
 import ThemedButton from "../../styles/Button";
 import { deleteVenue } from "../../API/apiDeleteVenue";
+import { fetchVenueBookings } from "../../API/apiUsers";
 
 const ProfileVenuesContainer = styled.div`
   min-height: 100vh;
@@ -21,9 +22,12 @@ const ProfileVenue = styled.div`
 
 const H2 = styled.h2`
   margin: 0px;
+  font-size: 1rem;
 `;
 
-const Location = styled.span``;
+const Location = styled.span`
+  font-size: 0.8rem;
+`;
 
 const ModalBackdrop = styled.div`
   display: ${(props) => (props.visible ? "block" : "none")};
@@ -62,6 +66,13 @@ function ProfileVenues({ user }) {
 
   useEffect(() => {
     setVenues(user.venues);
+    fetchVenueBookings()
+      .then((response) => {
+        console.log("Booking response:", response);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch venue bookings:", error);
+      });
   }, [user.venues]);
 
   const handleDeleteClick = (venueId) => {
