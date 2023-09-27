@@ -6,7 +6,8 @@ import LoginModal from "../Login";
 
 const MyHeader = styled.header`
   background-color: ${(props) => props.theme.color.c5};
-  box-shadow: 0px 3px 6px rgb(239, 243, 246);
+  box-shadow: 0px 0px 4px 0px ${(props) => props.theme.color.c3};
+  margin-bottom: 2px;
 `;
 
 const Nav = styled.nav`
