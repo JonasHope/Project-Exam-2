@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import styled from "styled-components";
+import styled, { StyleSheetManager } from "styled-components";
 
 const ScrollToTopButton = styled.div`
   position: fixed;
@@ -51,9 +51,13 @@ function ScrollToTop() {
   }, []);
 
   return (
-    <ScrollToTopButton visible={isVisible} onClick={scrollToTop}>
-      <StyledFontAwesomeIcon icon={faChevronUp} />
-    </ScrollToTopButton>
+    <StyleSheetManager
+      shouldForwardProp={(prop) => !["image", "visible"].includes(prop)}
+    >
+      <ScrollToTopButton visible={isVisible} onClick={scrollToTop}>
+        <StyledFontAwesomeIcon icon={faChevronUp} />
+      </ScrollToTopButton>
+    </StyleSheetManager>
   );
 }
 

@@ -20,12 +20,26 @@ const BookingAndVenueContainer = styled.div`
 const AccountInfoAndOptions = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
+
+  ${(props) => props.theme.media.tablet} {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const StyledThemedButton = styled(ThemedButton)`
-  background-color: ${(props) => props.theme.color.c6};
+  background-color: green;
   color: ${(props) => props.theme.color.c5};
+  margin: 0px 10px;
+
+  ${(props) => props.theme.media.tablet} {
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: 130px;
+    font-size: 0.8rem;
+  }
 `;
 
 function ProfilePage() {
@@ -51,8 +65,9 @@ function ProfilePage() {
         <Width>
           <AccountInfoAndOptions>
             <ProfileAccountInfo user={user} />
+
             <Link to="/CreateVenue">
-              <StyledThemedButton>+ Create venue</StyledThemedButton>
+              <StyledThemedButton>Create Venue</StyledThemedButton>
             </Link>
           </AccountInfoAndOptions>
 

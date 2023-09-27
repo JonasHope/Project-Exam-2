@@ -41,7 +41,7 @@ const BookedOptions = styled.div`
 
 const VenueBookingImage = styled.div`
   background-image: url(${(props) => props.image});
-  width: 120px;
+  min-width: 120px;
   height: 120px;
   border-radius: 5px;
   background-repeat: no-repeat, no-repeat;

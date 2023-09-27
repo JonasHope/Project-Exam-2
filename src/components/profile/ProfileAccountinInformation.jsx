@@ -7,6 +7,11 @@ const ProfileInfoContainer = styled.div`
   display: flex;
   margin: 20px 0px;
   padding: 10px;
+
+  ${(props) => props.theme.media.tablet} {
+    margin: 10px 0px 5px 0px;
+    padding: 0px 10px;
+  }
 `;
 
 const ProfileImageContainer = styled.div`
@@ -62,10 +67,12 @@ const ChangeAvatarInput = styled.input`
 const ChangeAvatarButton = styled.button`
   margin-top: 5px;
   border: none;
-  border-radius: 2px;
+  border-radius: 5px;
   padding: 5px 10px;
   background-color: ${(props) => props.theme.color.c3};
   color: ${(props) => props.theme.color.c5};
+  width: 130px;
+  font-size: 0.8rem;
 `;
 
 function ProfileAccountInfo({ user }) {
@@ -101,6 +108,7 @@ function ProfileAccountInfo({ user }) {
             <ChangeAvatarForm>
               <ChangeAvatarInput
                 type="text"
+                name="media"
                 value={newAvatar}
                 onChange={(e) => setNewAvatar(e.target.value)}
                 placeholder="Image URL"
