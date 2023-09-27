@@ -11,19 +11,25 @@ const BookingContainer = styled.form`
 
 const H2 = styled.h2`
   color: ${(props) => props.theme.color.c6};
+  margin: 0px;
 `;
 
 const H3 = styled.h3`
-  margin-top: 0px;
+  margin: 12px 0px;
+  font-size: 1rem;
+`;
+
+const TotalH3 = styled.h3`
+  margin: 25px 0px;
 `;
 
 const Select = styled.select`
   cursor: pointer;
-  background-color: inherit;
+  background-color: ;
   padding: 5px 10px;
   border-radius: 5px;
-  border: 1px solid ${(props) => props.theme.color.c3};
-  font-size: 1rem;
+  border: 1px solid ${(props) => props.theme.color.c1};
+  font-size: 0.9rem;
 `;
 
 const StyledDateSpan = styled.span`
@@ -32,6 +38,7 @@ const StyledDateSpan = styled.span`
   padding: 5px 10px;
   border-radius: 5px;
   border: 1px solid ${(props) => props.theme.color.c1};
+  font-size: 0.9rem;
 `;
 
 const SelectedBooking = styled.span`
@@ -143,18 +150,18 @@ function BookingForm({
   return (
     <BookingContainer onSubmit={handleBookingSubmit}>
       <H2>Booking</H2>
-      <h3>Choose guest count</h3>
+      <H3>Choose guest count</H3>
       <Select
         value={selectedGuests}
         onChange={(event) => setSelectedGuests(parseInt(event.target.value))}
       >
         {guestOptions.map((guestCount) => (
           <option key={guestCount} value={guestCount}>
-            {guestCount} guest{guestCount !== 1 ? "s" : ""}
+            {guestCount} Guest{guestCount !== 1 ? "s" : ""}
           </option>
         ))}
       </Select>
-      <h3>Choose Booking Dates</h3>
+      <H3>Choose Booking Dates</H3>
       <StyledDateSpan onClick={() => setShowDatePicker(!showDatePicker)}>
         {dateRange[0] && dateRange[1]
           ? `${dateRange[0].toLocaleDateString()} - ${dateRange[1].toLocaleDateString()}`
@@ -176,7 +183,7 @@ function BookingForm({
         </div>
       )}
       <SelectedBooking>
-        You have chosen{" "}
+        You have chosen:{" "}
         <b>
           {selectedGuests} guests - Staying over{" "}
           {dateRange[0] && dateRange[1]
@@ -185,7 +192,7 @@ function BookingForm({
           Nights.
         </b>
       </SelectedBooking>
-      <H3>Total: £{totalPrice},- </H3>
+      <TotalH3>Total: £{totalPrice},- </TotalH3>
       {successBooking ? (
         <a href="/Profile">
           <SuccessMsg>{successBooking}</SuccessMsg>

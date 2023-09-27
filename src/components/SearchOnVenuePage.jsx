@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHotel, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faHotel, faUser, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { fetchVenues } from "../API/apiVenues";
 import ThemedButton from "../styles/Button";
@@ -19,7 +19,8 @@ const SearchContent = styled.div`
   margin: auto;
   border-radius: 5px;
   width: 100%;
-  box-shadow: 0px 0px 1px 2px ${(props) => props.theme.color.c1};
+  box-shadow: 0px 0px 3px ${(props) => props.theme.color.c4};
+  padding: 10px;
 
   ${(props) => props.theme.media.desktop} {
     background-color: inherit;
@@ -34,18 +35,28 @@ const SearchForm = styled.form`
   align-items: center;
   height: 100%;
   padding: 5px;
+
+  ${(props) => props.theme.media.desktop} {
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 43px;
+  }
 `;
 
 const SearchFormChildren = styled.div`
   padding: 20px 0px;
 
   ${(props) => props.theme.media.desktop} {
-    padding: 5px 20px;
+    padding: 0px;
   }
 `;
 
 const H3 = styled.h4`
   margin: 0px 5px 2px 0px;
+
+  ${(props) => props.theme.media.desktop} {
+    display: none;
+  }
 `;
 
 const SelectGuests = styled.input`
@@ -54,10 +65,20 @@ const SelectGuests = styled.input`
   font-size: 1rem;
   margin-right: 5px;
   width: 80px;
-  padding: 5px;
-  border: 2px solid ${(props) => props.theme.color.c1};
-  border-radius: 10px;
+  padding: 10px 15px;
+  border: 1px solid ${(props) => props.theme.color.c1};
+  border-radius: 20px;
   background-color: ${(props) => props.theme.color.c5};
+
+  ${(props) => props.theme.media.desktop} {
+    border-radius: 0px 20px 20px 0px;
+    margin: 0px;
+  }
+
+  &::placeholder {
+    color: ${(props) => props.theme.color.c3};
+    font-size: 0.9rem;
+  }
 `;
 
 const Vl = styled.div`
@@ -66,25 +87,37 @@ const Vl = styled.div`
   width: 90%;
   margin: 10px 0px;
   border-radius: 20px;
+
+  ${(props) => props.theme.media.desktop} {
+    display: none;
+  }
 `;
 
 const IconSpaceing = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  justify-content: center;
 `;
 
 const StyledThemedButton = styled(ThemedButton)`
-  margin: 20px;
+  margin: 10px;
+  border-radius: 50%;
 
   ${(props) => props.theme.media.desktop} {
-    margin: 5px 20px;
+    margin: 2px;
   }
 `;
 
 const ChildrenContainer = styled.div`
   ${(props) => props.theme.media.desktop} {
     display: flex;
+  }
+`;
+
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+  ${(props) => props.theme.media.desktop} {
+    display: none;
   }
 `;
 
@@ -133,7 +166,10 @@ function StaticSearchComponent({ onSearch }) {
             <SearchFormChildren>
               <IconSpaceing>
                 <H3>Location</H3>
-                <FontAwesomeIcon icon={faHotel} style={{ color: "#ff7e5f" }} />
+                <StyledFontAwesomeIcon
+                  icon={faHotel}
+                  style={{ color: "#ff7e5f" }}
+                />
               </IconSpaceing>
 
               <CustomCountryDropdown
@@ -146,13 +182,16 @@ function StaticSearchComponent({ onSearch }) {
             <SearchFormChildren>
               <IconSpaceing>
                 <H3>Guests</H3>
-                <FontAwesomeIcon icon={faUser} style={{ color: "#ff7e5f" }} />
+                <StyledFontAwesomeIcon
+                  icon={faUser}
+                  style={{ color: "#ff7e5f" }}
+                />
               </IconSpaceing>
               <SelectGuests
                 type="number"
                 id="guests"
                 name="guests"
-                placeholder="Number"
+                placeholder="Guests"
                 value={maxGuests}
                 onChange={(e) => setMaxGuests(e.target.value)}
               />
@@ -162,7 +201,7 @@ function StaticSearchComponent({ onSearch }) {
             type="submit"
             aria-label="search button for venues"
           >
-            Search Venues
+            <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
           </StyledThemedButton>
         </SearchForm>
       </SearchContent>

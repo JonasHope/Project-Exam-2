@@ -14,9 +14,14 @@ const Hr = styled.hr`
 
 const H1 = styled.h1`
   margin-top: 0px;
+  font-size: 1.2rem;
 `;
-const Country = styled.span``;
-const Location = styled.span``;
+const Country = styled.span`
+  font-size: 1rem;
+`;
+const Location = styled.span`
+  font-size: 0.8rem;
+`;
 
 function VenueHeader({ venueData }) {
   return (

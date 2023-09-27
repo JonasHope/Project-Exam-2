@@ -7,6 +7,18 @@ const DropdownWrapper = styled.div`
   position: relative;
   display: inline-block;
   cursor: pointer;
+  background-color: ${(props) => props.theme.color.c5};
+  padding: 10px 15px;
+  border: 1px solid ${(props) => props.theme.color.c1};
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: ${(props) => props.theme.color.c3};
+  width: 80px;
+
+  ${(props) => props.theme.media.desktop} {
+    border-radius: 20px 0px 0px 20px;
+    border-right: none;
+  }
 `;
 
 const DropdownContainer = styled.div`

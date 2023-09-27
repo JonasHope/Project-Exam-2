@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { StyleSheetManager } from "styled-components";
 import StaticSearchComponent from "../components/SearchOnVenuePage";
 import Width from "../styles/Width";
+import ScrollToTop from "../components/ScrollUp";
 
 const VenuesSection = styled.section`
   background-color: ${(props) => props.theme.color.c2};
@@ -21,6 +22,10 @@ const VenuesWidth = styled.div`
 
 const SiteTitle = styled.div`
   padding: 5px 10px;
+
+  ${(props) => props.theme.media.desktop} {
+    text-align: center;
+  }
 `;
 
 const H1 = styled.h1`
@@ -29,7 +34,7 @@ const H1 = styled.h1`
 
 const SearchAndVenuesContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 
   ${(props) => props.theme.media.desktop} {
     flex-direction: column;
@@ -38,26 +43,29 @@ const SearchAndVenuesContainer = styled.div`
 
 const FilterDiv = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  width: 68%;
-
+  padding: 0px 5px;
   ${(props) => props.theme.media.desktop} {
     flex-direction: column;
   }
 `;
 
 const FilterVenues = styled.div`
-  padding: 10px;
   display: flex;
   align-items: flex-end;
-`;
-
-const Hr = styled.hr`
-  width: 100%;
-  display: none;
 
   ${(props) => props.theme.media.desktop} {
-    display: block;
+    justify-content: center;
+  }
+`;
+
+const SearchAndContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  ${(props) => props.theme.media.desktop} {
+    flex-direction: column;
   }
 `;
 
@@ -96,30 +104,30 @@ function Venues() {
     <StyleSheetManager
       shouldForwardProp={(prop) => !["visible"].includes(prop)}
     >
+      <ScrollToTop />
       <VenuesSection>
         <Width>
           <VenuesWidth>
-            <FilterDiv>
-              <SiteTitle>
-                <H1>Venues</H1>
-                <span>A list of all selected venues</span>
-              </SiteTitle>
-              <Hr></Hr>
-              <FilterVenues>
-                <SortingVenues onSortChange={handleSortChange} />
-              </FilterVenues>
-              <Hr></Hr>
-            </FilterDiv>
             <SearchAndVenuesContainer>
-              <StaticSearchComponent
-                onSearch={handleSearch}
-              ></StaticSearchComponent>
+              <FilterDiv>
+                <SiteTitle>
+                  <H1>Venues</H1>
+                </SiteTitle>
 
-              <FetchVenues
-                sortOrder={sortOrder}
-                countryFilter={countryFilter}
-                maxGuestsFilter={maxGuestsFilter}
-              />
+                <FilterVenues>
+                  <SortingVenues onSortChange={handleSortChange} />
+                </FilterVenues>
+              </FilterDiv>
+              <SearchAndContent>
+                <StaticSearchComponent
+                  onSearch={handleSearch}
+                ></StaticSearchComponent>
+                <FetchVenues
+                  sortOrder={sortOrder}
+                  countryFilter={countryFilter}
+                  maxGuestsFilter={maxGuestsFilter}
+                />
+              </SearchAndContent>
             </SearchAndVenuesContainer>
           </VenuesWidth>
         </Width>

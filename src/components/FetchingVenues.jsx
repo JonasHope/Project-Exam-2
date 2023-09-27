@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { fetchVenues } from "../API/apiVenues";
 
 const VenuesContainer = styled.div`
-  padding: 5px
-  width: 50%
+  padding: 5px;
+  width: 80%;
 
   ${(props) => props.theme.media.desktop} {
     width: auto;
@@ -20,7 +20,7 @@ const StyledLink = styled(Link)`
   justify-content: flex-end;
 
   ${(props) => props.theme.media.desktop} {
-    margin: 0px 20px;
+    margin: 5px 10px;
   }
 `;
 
@@ -29,13 +29,12 @@ const VenuesContent = styled.div`
   border-radius: 20px;
   margin: 5px 0px;
   justify-content: space-between;
-  box-shadow: 0px 0px 6px ${(props) => props.theme.color.c2};
+  box-shadow: 0px 0px 2px ${(props) => props.theme.color.c4};
   background-color: white;
   transition: color 0.3s, transform 0.3s;
   min-width: 100%;
 
   &:hover {
-    box-shadow: 0px 0px 6px ${(props) => props.theme.color.c2};
     transform: scale(1.01);
   }
 
@@ -63,6 +62,10 @@ const VenueImage = styled.div`
   background-position: center;
   background-size: cover;
   border-radius: 20px 0px 0px 20px;
+
+  ${(props) => props.theme.media.desktop} {
+    border-radius: 20px 20px 0px 0px;
+  }
 `;
 
 const VenueText = styled.div`

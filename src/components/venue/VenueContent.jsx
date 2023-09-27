@@ -7,7 +7,7 @@ const InformationContainer = styled.div`
   background-color: ${(props) => props.theme.color.c5};
   padding: 10px;
   border-radius: 10px;
-  width: 50%;
+  width: 60%;
   margin-bottom: 20px;
   height: 100%;
 

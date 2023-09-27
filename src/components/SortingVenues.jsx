@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CustomDropdown from "./CustomDropdown";
 
-const SortingVenuesContainer = styled.div``;
+const SortingVenuesContainer = styled.div`
+  font-size: 0.9rem;
+`;
 
 function SortingVenues({ onSortChange }) {
   const [selectedSortOrder, setSelectedSortOrder] = useState("desc");
