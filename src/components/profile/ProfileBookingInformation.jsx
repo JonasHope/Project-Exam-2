@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import ThemedButton from "../../styles/Button";
 import { deleteBooking } from "../../API/apiBookings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +13,7 @@ const ProfileBookingContainer = styled.div`
   min-height: 100vh;
 `;
 
-const BookedVenues = styled.div`
+const StyledLink = styled(Link)`
   display: flex;
   margin: 10px;
 `;
@@ -156,7 +157,10 @@ function ProfileBookingInfo({ user }) {
       {bookings.map((bookingData) => (
         <div key={bookingData.id}>
           <BookingCards>
-            <BookedVenues id={bookingData.id}>
+            <StyledLink
+              to={`/Venue/${bookingData.venue.id}`}
+              id={bookingData.id}
+            >
               <VenueBookingImage
                 image={bookingData.venue.media[0]}
               ></VenueBookingImage>
@@ -166,7 +170,7 @@ function ProfileBookingInfo({ user }) {
                   {formatDates(bookingData.dateFrom, bookingData.dateTo)}
                 </DateBooking>
               </VenueInfo>
-            </BookedVenues>
+            </StyledLink>
             <BookedOptions>
               <OpenDeleteModal onClick={() => openDeleteModal(bookingData.id)}>
                 <FontAwesomeIcon icon={faRemove}></FontAwesomeIcon>

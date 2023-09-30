@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { StyleSheetManager } from "styled-components";
+import { Link } from "react-router-dom";
 import ThemedButton from "../../styles/Button";
 import { deleteVenue } from "../../API/apiDeleteVenue";
 import { fetchVenueBookings } from "../../API/apiUsers";
@@ -28,10 +29,6 @@ const ProfileVenue = styled.div`
 const H2 = styled.h2`
   margin: 0px;
   font-size: 1rem;
-`;
-
-const Location = styled.span`
-  font-size: 0.8rem;
 `;
 
 const ModalBackdrop = styled.div`
@@ -244,9 +241,9 @@ function ProfileVenues() {
         {bookingsData.map((bookingData) => (
           <div key={bookingData.id}>
             <ProfileVenue>
-              <div>
+              <Link to={`/Venue/${bookingData.id}`}>
                 <H2>{bookingData.name}</H2>
-              </div>
+              </Link>
               <ButtonGroup>
                 <UpdateVenue
                   bookingData={bookingData}
