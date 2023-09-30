@@ -11,6 +11,10 @@ const ThemedButton = styled.button`
   &:hover {
     background-color: ${(props) => props.theme.color.c6};
   }
+
+  &:disabled {
+    background-color: ${(props) => props.theme.color.c4};
+  }
 `;
 
 export default ThemedButton;
