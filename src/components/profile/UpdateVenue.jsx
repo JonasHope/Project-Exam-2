@@ -29,6 +29,17 @@ const FormforVenueUpdate = styled.form`
   overflow-x: hidden;
 `;
 
+const SuccessContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: darkgreen;
+  padding: 10px;
+  z-index: 1005;
+  max-width: 200px;
+`;
+
 const OpenUpdateFormButton = styled(ThemedButton)`
   padding: 5px 10px;
   background-color: inherit;
@@ -85,6 +96,7 @@ const CloseButton = styled.button`
 
 function UpdateVenue({ bookingData, onUpdateVenue }) {
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [updateSuccessMessage, setUpdateSuccessMessage] = useState(null);
   const [editedFields, setEditedFields] = useState({});
   const [venueData, setVenueData] = useState({
     name: "",
@@ -214,9 +226,21 @@ function UpdateVenue({ bookingData, onUpdateVenue }) {
       });
 
       if (response.ok) {
-        console.log("Venue updated successfully");
         onUpdateVenue(editedFieldsPayload);
-        setIsFormVisible(false);
+
+        function countdownAndReload(countdown) {
+          if (countdown === 0) {
+            window.location.reload();
+          } else {
+            setUpdateSuccessMessage(
+              `Your venue is updated, returning to the profile page in ${countdown} seconds`
+            );
+            setTimeout(function () {
+              countdownAndReload(countdown - 1);
+            }, 1000);
+          }
+        }
+        countdownAndReload(7);
       } else {
         console.error("Failed to update venue");
       }
@@ -371,6 +395,7 @@ function UpdateVenue({ bookingData, onUpdateVenue }) {
                   <Label htmlFor="pets">Pets allowed</Label>
                 </div>
               </FormSection>
+              <SuccessContainer>{updateSuccessMessage}</SuccessContainer>
               <ThemedButton type="submit">Submit</ThemedButton>
             </FormforVenueUpdate>
           </FormModalBackground>

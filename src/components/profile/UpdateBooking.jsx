@@ -112,7 +112,10 @@ function UpdateBookingModal({ bookingId, setBookings }) {
         });
       }
     } catch (error) {
-      console.error("An error occurred while making the booking:", error);
+      console.error(
+        "An error occurred while making the booking change:",
+        error
+      );
     }
   };
 
