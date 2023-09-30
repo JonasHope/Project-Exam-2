@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { styled } from "styled-components";
+import { styled, StyleSheetManager } from "styled-components";
 import { Link } from "react-router-dom";
 import { fetchVenues } from "../API/apiVenues";
 import Pagination from "./Pagination";
@@ -172,43 +172,45 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
   };
 
   return (
-    <VenuesContainer>
-      {venues.slice((currentPage - 1) * 20, currentPage * 20).map((venue) => (
-        <StyledLink to={`/Venue/${venue.id}`} key={venue.id}>
-          <VenuesContent>
-            <CardSplitter>
-              <VenueImage image={venue.media[0]}>
-                <VenueCountry>
-                  <Country>{venue.location.country}</Country>
-                </VenueCountry>
-              </VenueImage>
-              <VenueText>
-                <NameAndCity>
-                  <VenueName>{venue.name}</VenueName>
-                  <span>{venue.location.city}</span>
-                </NameAndCity>
-                <VenueRating>
-                  <Rating>{venue.rating}</Rating>
-                  <RatingSpan>Rating</RatingSpan>
-                </VenueRating>
-              </VenueText>
-            </CardSplitter>
+    <StyleSheetManager shouldForwardProp={(prop) => !["active"].includes(prop)}>
+      <VenuesContainer>
+        {venues.slice((currentPage - 1) * 20, currentPage * 20).map((venue) => (
+          <StyledLink to={`/Venue/${venue.id}`} key={venue.id}>
+            <VenuesContent>
+              <CardSplitter>
+                <VenueImage image={venue.media[0]}>
+                  <VenueCountry>
+                    <Country>{venue.location.country}</Country>
+                  </VenueCountry>
+                </VenueImage>
+                <VenueText>
+                  <NameAndCity>
+                    <VenueName>{venue.name}</VenueName>
+                    <span>{venue.location.city}</span>
+                  </NameAndCity>
+                  <VenueRating>
+                    <Rating>{venue.rating}</Rating>
+                    <RatingSpan>Rating</RatingSpan>
+                  </VenueRating>
+                </VenueText>
+              </CardSplitter>
 
-            <VenuePriceContainer>
-              <Price>£ {venue.price}</Price>
-              <span>for 1 night per person</span>
-            </VenuePriceContainer>
-          </VenuesContent>
-        </StyledLink>
-      ))}
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      )}
-    </VenuesContainer>
+              <VenuePriceContainer>
+                <Price>£ {venue.price}</Price>
+                <span>for 1 night per person</span>
+              </VenuePriceContainer>
+            </VenuesContent>
+          </StyledLink>
+        ))}
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
+      </VenuesContainer>
+    </StyleSheetManager>
   );
 }
 
