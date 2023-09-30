@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -72,6 +72,14 @@ function BookingForm({
   const [overlapError, setOverlapError] = useState("");
   const [successBooking, setSuccessBooking] = useState("");
   const [loading, setLoading] = useState(false);
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("accessToken")
+  );
+
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem("accessToken");
+    setAccessToken(storedAccessToken);
+  }, []);
 
   const generateDisabledDates = () => {
     const disabledDates = [];
@@ -193,16 +201,20 @@ function BookingForm({
         </b>
       </SelectedBooking>
       <TotalH3>Total: £{totalPrice},- </TotalH3>
-      {successBooking ? (
-        <a href="/Profile">
-          <SuccessMsg>{successBooking}</SuccessMsg>
-        </a>
-      ) : (
-        <div className="error"></div>
-      )}
-      <ThemedButton type="submit" disabled={loading}>
-        {loading ? "Booking in progress..." : "Book Venue"}
+      <ThemedButton type="submit" disabled={!accessToken || loading}>
+        {loading
+          ? "Booking in progress..."
+          : accessToken
+          ? "Book Venue"
+          : "Login to book a venue"}
       </ThemedButton>
+      {accessToken
+        ? successBooking && (
+            <a href="/Profile">
+              <SuccessMsg>{successBooking}</SuccessMsg>
+            </a>
+          )
+        : null}
     </BookingContainer>
   );
 }
