@@ -5,7 +5,7 @@ const SiteFooter = styled.footer`
   background-color: ${(props) => props.theme.color.c5};
   margin-top: auto;
   text-align: center;
-  box-shadow: 1px -1px 3px ${(props) => props.theme.color.c3};
+  box-shadow: 1px -1px 3px ${(props) => props.theme.color.c4};
 `;
 
 const FooterDiv = styled.div``;

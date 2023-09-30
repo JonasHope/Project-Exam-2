@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { StyleSheetManager } from "styled-components";
 import { fetchProfile } from "../../API/apiUsers";
 import { updateAvatar } from "../../API/apiChangeAvatar";
 import ThemedButton from "../../styles/Button";
@@ -137,7 +137,9 @@ function ProfileAccountInfo({ user }) {
   };
 
   return (
-    <div>
+    <StyleSheetManager
+      shouldForwardProp={(prop) => !["visible"].includes(prop)}
+    >
       {user ? (
         <ProfileInfoContainer>
           <ProfileImageContainer>
@@ -170,7 +172,7 @@ function ProfileAccountInfo({ user }) {
           <CloseButton onClick={closeAvatarModal}>Close</CloseButton>
         </ModalContent>
       </ModalBackdrop>
-    </div>
+    </StyleSheetManager>
   );
 }
 

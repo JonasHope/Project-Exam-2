@@ -12,6 +12,10 @@ const CreateVenueContainer = styled.div`
   min-height: 100vh;
 `;
 
+const H1 = styled.h1`
+  text-align: center;
+`;
+
 const ButtonGroup = styled.div`
   display: flex;
   justify-content: center;
@@ -32,6 +36,7 @@ const ChangeTab = styled.div`
   font-weight: bold;
   padding: 5px;
   border-bottom: 2px solid black;
+  cursor: pointer;
 
   &[disabled] {
     color: ${(props) => props.theme.color.c4};
@@ -264,7 +269,7 @@ function CreateVenue() {
       <CreateVenueContainer>
         <Width>
           <div>
-            <h1>Set up your venue</h1>
+            <H1>Set up your venue</H1>
           </div>
           <div>
             <form onSubmit={handleSubmit}>
