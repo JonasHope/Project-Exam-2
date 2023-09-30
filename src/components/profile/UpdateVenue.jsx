@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Width from "../styles/Width";
-import ThemedButton from "../styles/Button";
+import Width from "../../styles/Width";
+import ThemedButton from "../../styles/Button";
 
 const UpdateVenueContainer = styled.div``;
 
