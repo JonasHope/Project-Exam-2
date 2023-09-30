@@ -139,9 +139,7 @@ function StaticSearchComponent({ onSearch }) {
               .map((venue) => venue.location.country)
               .filter((country) => country.trim() !== "")
               .map((country) => country.trim())
-              .map(
-                (country) => country.charAt(0).toUpperCase() + country.slice(1)
-              )
+              .map((country) => country.charAt(0) + country.slice(1))
           ),
         ];
         setCountries(uniqueCountries);
