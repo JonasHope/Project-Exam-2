@@ -25,6 +25,14 @@ const ModalContent = styled.div`
   display: flex;
   width: 50vw;
   min-height: 50vh;
+
+  ${(props) => props.theme.media.tablet} {
+    width: 90vw;
+  }
+
+  ${(props) => props.theme.media.desktopxl} {
+    width: 40vw;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -73,6 +81,7 @@ const Form = styled.form`
 
 const RegisterAccount = styled.p`
   cursor: pointer;
+  padding: 5px;
 `;
 
 const RegFormContainer = styled.div`
@@ -82,6 +91,13 @@ const RegFormContainer = styled.div`
 
 const ErrorMsg = styled.div`
   color: darkred;
+  padding: 5px;
+`;
+
+const VenManMsg = styled.span`
+  font-size: 0.8rem;
+  color: ${(props) => props.theme.color.c4};
+  margin-bottom: 10px;
 `;
 
 function RegisterForm({ onSubmit }) {
@@ -183,6 +199,7 @@ function RegisterForm({ onSubmit }) {
             />
             Venue Manager
           </label>
+          <VenManMsg>You can't change this later.</VenManMsg>
           <ThemedButton type="submit">Register</ThemedButton>
           <ErrorMsg>{failResponse}</ErrorMsg>
         </Form>
