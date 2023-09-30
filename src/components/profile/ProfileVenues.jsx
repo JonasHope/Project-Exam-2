@@ -5,10 +5,12 @@ import { deleteVenue } from "../../API/apiDeleteVenue";
 import { fetchVenueBookings } from "../../API/apiUsers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import UpdateVenue from "../../pages/UpdateVenue";
 
 const ProfileVenuesContainer = styled.div`
   min-height: 100vh;
   margin: 10px;
+  padding: 20px;
   border-radius: 10px;
 `;
 
@@ -19,6 +21,7 @@ const ProfileVenue = styled.div`
 
   ${(props) => props.theme.media.mobile} {
     flex-direction: column;
+    text-align: center;
   }
 `;
 
@@ -57,9 +60,30 @@ const TheButtons = styled.div`
   justify-content: space-evenly;
 `;
 
+const OpenDeleteVenueButton = styled(ThemedButton)`
+  padding: 5px 10px;
+  background-color: inherit;
+  color: darkred;
+  font-weight: bold;
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.c2};
+  }
+`;
+
 const StyledThemedButton = styled(ThemedButton)`
   background-color: darkred;
-  margin: 0px 5px;
+`;
+
+const ViewBookingsOnVenueButton = styled(ThemedButton)`
+  padding: 5px 10px;
+  background-color: inherit;
+  color: ${(props) => props.theme.color.c3};
+  font-weight: bold;
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.c2};
+  }
 `;
 
 const VenueDropdown = styled.div`
@@ -208,6 +232,10 @@ function ProfileVenues() {
     }
   };
 
+  const handleUpdateVenue = (updatedVenueData) => {
+    console.log("Venue updated:", updatedVenueData);
+  };
+
   return (
     <StyleSheetManager
       shouldForwardProp={(prop) => !["visible"].includes(prop)}
@@ -218,17 +246,22 @@ function ProfileVenues() {
             <ProfileVenue>
               <div>
                 <H2>{bookingData.name}</H2>
-                <Location>{bookingData.location.city}</Location>
               </div>
               <ButtonGroup>
-                <ThemedButton onClick={() => handleVenueDropdown(bookingData)}>
+                <UpdateVenue
+                  bookingData={bookingData}
+                  onUpdateVenue={handleUpdateVenue}
+                />
+                <ViewBookingsOnVenueButton
+                  onClick={() => handleVenueDropdown(bookingData)}
+                >
                   {selectedVenue === bookingData.id ? "Close" : "View Bookings"}
-                </ThemedButton>
-                <StyledThemedButton
+                </ViewBookingsOnVenueButton>
+                <OpenDeleteVenueButton
                   onClick={() => handleDeleteClick(bookingData.id)}
                 >
                   Delete Venue
-                </StyledThemedButton>
+                </OpenDeleteVenueButton>
               </ButtonGroup>
               <VenueDropdown
                 visible={selectedVenue === bookingData.id}
@@ -240,8 +273,8 @@ function ProfileVenues() {
                 <H3>Bookings for {bookingData.name}</H3>
                 <UlForBookingList>
                   {bookingData.bookings.map((booking) => (
-                    <div>
-                      <BookingInfoList key={booking.id}>
+                    <div key={booking.id}>
+                      <BookingInfoList>
                         <LabelRow>
                           <Label>From:</Label>
                           <Label>To:</Label>

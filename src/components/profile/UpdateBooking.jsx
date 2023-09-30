@@ -27,6 +27,18 @@ const ModalContent = styled.form`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
   padding: 20px;
+  margin: 10px;
+`;
+
+const OpenUpdateBookingForm = styled(ThemedButton)`
+  padding: 5px 10px;
+  background-color: inherit;
+  color: ${(props) => props.theme.color.c3};
+  font-weight: bold;
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.c2};
+  }
 `;
 
 const CloseIcon = styled.div`
@@ -106,7 +118,9 @@ function UpdateBookingModal({ bookingId, setBookings }) {
 
   return (
     <>
-      <ThemedButton onClick={openModal}>Update Booking</ThemedButton>
+      <OpenUpdateBookingForm onClick={openModal}>
+        Update Booking
+      </OpenUpdateBookingForm>
       {isModalOpen && (
         <UpdateModalContainer onClick={closeModal}>
           <ModalContent
