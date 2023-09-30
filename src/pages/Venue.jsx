@@ -8,6 +8,7 @@ import calculateTotalPrice from "../components/venue/CalculatePrice";
 import VenueHeader from "../components/venue/VenueHeader";
 import BookingForm from "../components/venue/BookingForm";
 import VenueInformation from "../components/venue/VenueContent";
+import GoBackClick from "../components/BackButton";
 
 const VenueContainer = styled.div`
   background-color: ${(props) => props.theme.color.c2};
@@ -72,6 +73,7 @@ function Venue() {
   return (
     <VenueContainer>
       <Width>
+        <GoBackClick />
         <VenueLayout>
           <BookingInfoContainer>
             <VenueHeader venueData={venueData} />
