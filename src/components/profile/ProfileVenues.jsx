@@ -6,7 +6,7 @@ import { deleteVenue } from "../../API/apiDeleteVenue";
 import { fetchVenueBookings } from "../../API/apiUsers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
-import UpdateVenue from "../../pages/UpdateVenue";
+import UpdateVenue from "./UpdateVenue";
 
 const ProfileVenuesContainer = styled.div`
   min-height: 100vh;
