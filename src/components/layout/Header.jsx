@@ -129,7 +129,6 @@ function Header() {
 
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        // Click occurred outside the dropdown, so close it
         setIsDropdownOpen(false);
       }
     };
@@ -155,6 +154,7 @@ function Header() {
     if (isLoggedIn) {
       localStorage.clear();
       setIsLoggedIn(false);
+      window.location.reload();
     } else {
       openModal();
     }
