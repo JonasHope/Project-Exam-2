@@ -20,7 +20,6 @@ function App() {
         <Route path="/Venue/:id" element={<Venue />}/>
         <Route path="/Profile" element={<ProfilePage />}/>
         <Route path="/CreateVenue" element={<CreateVenue />} />
-        
       </Routes>
       <Footer/>
     </BrowserRouter>
