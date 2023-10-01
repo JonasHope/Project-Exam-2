@@ -3,9 +3,9 @@ import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHotel, faUser, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { fetchVenues } from "../API/apiVenues";
-import ThemedButton from "../styles/Button";
-import CustomCountryDropdown from "./CountryDropdown";
+import { fetchVenues } from "../../API/venue/apiVenues";
+import ThemedButton from "../../styles/Button";
+import CustomCountryDropdown from "../dropdowns/CountryDropdown";
 
 const SearchContainer = styled.div`
   padding: 10px;

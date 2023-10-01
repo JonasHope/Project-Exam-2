@@ -1,4 +1,4 @@
-import { BASE_URL } from "./apiConsts";
+import { BASE_URL } from "../base/apiConsts";
 
 const Bookings_URL = "/bookings"
 

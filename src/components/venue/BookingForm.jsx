@@ -3,7 +3,7 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ThemedButton from "../../styles/Button";
-import LoginModal from "../Login";
+import LoginModal from "../account/Login";
 import { Link } from "react-router-dom";
 
 const BookingContainer = styled.form`

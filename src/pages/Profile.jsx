@@ -3,7 +3,7 @@ import { StyleSheetManager } from "styled-components";
 import styled from "styled-components";
 import Width from "../styles/Width";
 import ProfileAccountInfo from "../components/profile/ProfileAccountinInformation";
-import { fetchProfile } from "../API/apiUsers";
+import { fetchProfile } from "../API/user/apiUsers";
 import ProfileTabGroup from "../components/profile/ProfileTabs";
 import ThemedButton from "../styles/Button";
 import { Link } from "react-router-dom";

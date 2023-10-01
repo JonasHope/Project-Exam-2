@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import loginfeat from "./images/loginfeat.jpg";
-import ThemedButton from "../styles/Button";
+import loginfeat from "../images/loginfeat.jpg";
+import ThemedButton from "../../styles/Button";
 import { StyleSheetManager } from "styled-components";
 
 const ModalBackground = styled.div`
@@ -151,7 +151,7 @@ function RegisterForm({ onSubmit }) {
 
   return (
     <RegFormContainer>
-      <ImageContainer></ImageContainer>
+      <ImageContainer alt="featured image of woman walking"></ImageContainer>
       <FormContainer>
         <CloseButton onClick={onSubmit}>x</CloseButton>
         <h2>Register</h2>
@@ -168,7 +168,7 @@ function RegisterForm({ onSubmit }) {
           />
           <label htmlFor="email">Email</label>
           <Input
-            id="regEmail"
+            id="email"
             type="email"
             name="email"
             placeholder="Email"
@@ -180,7 +180,7 @@ function RegisterForm({ onSubmit }) {
           />
           <label htmlFor="password">Password</label>
           <Input
-            id="regPassword"
+            id="password"
             type="password"
             name="password"
             placeholder="Password"
@@ -270,14 +270,14 @@ function LoginModal({ isOpen, onClose }) {
             <RegisterForm onSubmit={() => setShowRegister(false)} />
           ) : (
             <>
-              <ImageContainer></ImageContainer>
+              <ImageContainer alt="featured image of woman walking"></ImageContainer>
               <FormContainer>
                 <CloseButton onClick={onClose}>x</CloseButton>
                 <h2>Login</h2>
                 <Form onSubmit={handleLoginSubmit}>
                   <label htmlFor="email">Email</label>
                   <Input
-                    id="loginEmail"
+                    id="email"
                     type="email"
                     name="email"
                     placeholder="Email"
@@ -289,7 +289,7 @@ function LoginModal({ isOpen, onClose }) {
                   />
                   <label htmlFor="password">Password</label>
                   <Input
-                    id="loginPassword"
+                    id="password"
                     type="password"
                     name="password"
                     placeholder="Password"

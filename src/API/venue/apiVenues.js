@@ -1,4 +1,4 @@
-import { BASE_URL } from "./apiConsts";
+import { BASE_URL } from "../base/apiConsts";
 
 const Venues_URL = "/venues";
 const OwnerAndBooking_URL = "/?_owner=true&_bookings=true";

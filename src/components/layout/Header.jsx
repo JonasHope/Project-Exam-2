@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { styled, StyleSheetManager } from "styled-components";
 import logo from "../images/logo.png";
-import LoginModal from "../Login";
+import LoginModal from "../account/Login";
 
 const MyHeader = styled.header`
   background-color: ${(props) => props.theme.color.c5};

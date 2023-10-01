@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import FetchVenues from "../components/FetchingVenues";
-import SortingVenues from "../components/SortingVenues";
+import FetchVenues from "../components/venues/FetchingVenues";
+import SortingVenues from "../components/venues/SortingVenues";
 import { useLocation } from "react-router-dom";
 import { StyleSheetManager } from "styled-components";
-import StaticSearchComponent from "../components/SearchOnVenuePage";
+import StaticSearchComponent from "../components/venues/SearchOnVenuePage";
 import Width from "../styles/Width";
-import ScrollToTop from "../components/ScrollUp";
+import ScrollToTop from "../components/scroll/ScrollUp";
 
 const VenuesSection = styled.section`
   background-color: ${(props) => props.theme.color.c2};

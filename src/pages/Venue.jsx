@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { fetchVenue } from "../API/apiVenues";
+import { fetchVenue } from "../API/venue/apiVenues";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.module.css";
 import Width from "../styles/Width";
@@ -8,7 +8,7 @@ import calculateTotalPrice from "../components/venue/CalculatePrice";
 import VenueHeader from "../components/venue/VenueHeader";
 import BookingForm from "../components/venue/BookingForm";
 import VenueInformation from "../components/venue/VenueContent";
-import GoBackClick from "../components/BackButton";
+import GoBackClick from "../components/backbutton/BackButton";
 import CustomLoader from "../components/loader/loader";
 
 const VenueContainer = styled.div`

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import ThemedButton from "../../styles/Button";
-import { deleteBooking } from "../../API/apiBookings";
+import { deleteBooking } from "../../API/bookings/apiBookings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRemove } from "@fortawesome/free-solid-svg-icons";
 import UpdateBookingModal from "./UpdateBooking";
@@ -163,6 +163,7 @@ function ProfileBookingInfo({ user }) {
             >
               <VenueBookingImage
                 image={bookingData.venue.media[0]}
+                alt={bookingData.venue.name}
               ></VenueBookingImage>
               <VenueInfo>
                 <H2>{bookingData.venue.name}</H2>

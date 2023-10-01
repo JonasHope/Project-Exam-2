@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import featured from "../components/images/feat.jpg";
+import featured from "../images/feat.jpg";
 
 const FeaturedSectionContainer = styled.section`
   background-color: ${(props) => props.theme.color.c2};
@@ -64,7 +64,7 @@ function FeaturedSection() {
           <H1>Villas, Apartments, Cabins</H1>
           <H2>Turning Spaces into Holidaze</H2>
         </H1Container>
-        <ImageContainer></ImageContainer>
+        <ImageContainer alt="featured image of a building"></ImageContainer>
       </FeatContent>
     </FeaturedSectionContainer>
   );

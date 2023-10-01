@@ -7,7 +7,7 @@ import Venues from './pages/Venues';
 import Venue from './pages/Venue';
 import ProfilePage from './pages/Profile';
 import CreateVenue from './pages/CreateVenue';
-import ScrollToTop from './components/ScrollUp';
+import ScrollToTop from './components/scroll/ScrollUp';
 
 function App() {
   return (

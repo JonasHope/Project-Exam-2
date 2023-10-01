@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { StyleSheetManager } from "styled-components";
-import { fetchProfile } from "../../API/apiUsers";
-import { updateAvatar } from "../../API/apiChangeAvatar";
+import { fetchProfile } from "../../API/user/apiUsers";
+import { updateAvatar } from "../../API/avatar/apiChangeAvatar";
 import ThemedButton from "../../styles/Button";
 
 const ProfileInfoContainer = styled.div`

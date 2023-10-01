@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { styled, StyleSheetManager } from "styled-components";
 import { Link } from "react-router-dom";
-import { fetchVenues } from "../API/apiVenues";
+import { fetchVenues } from "../../API/venue/apiVenues";
 import Pagination from "./Pagination";
-import CustomLoader from "./loader/loader";
+import CustomLoader from "../loader/loader";
 
 const VenuesContainer = styled.div`
   margin-left: 20px;
@@ -186,7 +186,7 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
               <StyledLink to={`/Venue/${venue.id}`} key={venue.id}>
                 <VenuesContent>
                   <CardSplitter>
-                    <VenueImage image={venue.media[0]}>
+                    <VenueImage image={venue.media[0]} alt={venue.name}>
                       <VenueCountry>
                         <Country>{venue.location.country}</Country>
                       </VenueCountry>

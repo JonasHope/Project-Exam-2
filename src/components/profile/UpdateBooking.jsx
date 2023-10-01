@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRemove } from "@fortawesome/free-solid-svg-icons";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { updateBooking } from "../../API/apiBookings";
+import { updateBooking } from "../../API/bookings/apiBookings";
 import Message from "./SuccessMsgUpdateBooking";
 
 const UpdateModalContainer = styled.div`

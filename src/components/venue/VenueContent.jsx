@@ -85,6 +85,7 @@ function VenueInformation({ venueData }) {
                 image={image}
                 highlighted={image === highlightedImage ? "true" : undefined}
                 onClick={() => handleImageClick(image)}
+                alt="highligted image of venue"
               ></Image>
             ))}
           </SmallImages>

@@ -1,8 +1,8 @@
 import React from "react";
 import { styled } from "styled-components";
-import FeaturedSection from "../components/FeaturedSection";
-import SearchComponent from "../components/SearchComponent";
-import HomeVM from "../components/HomeVMSection";
+import FeaturedSection from "../components/home/FeaturedSection";
+import SearchComponent from "../components/home/SearchComponent";
+import HomeVM from "../components/home/HomeVMSection";
 import { useNavigate } from "react-router-dom";
 import { StyleSheetManager } from "styled-components";
 
