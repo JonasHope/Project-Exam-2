@@ -52,15 +52,21 @@ const ProfileImage = styled.div`
 `;
 
 const ChangeAvatarInput = styled.input`
-  padding: 5px;
-  border: none;
-  border-bottom: 1px solid ${(props) => props.theme.color.c6};
-  background-color: inherit;
+  padding: 10px;
+  border: 2px solid ${(props) => props.theme.color.c1};
+  border-radius: 20px;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const ChangeAvatarButton = styled(ThemedButton)`
   font-size: 0.8rem;
   margin: 10px 0px;
+  padding: 10px;
 `;
 
 const ModalBackdrop = styled.div`
@@ -90,6 +96,7 @@ const ModalContent = styled.div`
 const CloseButton = styled(ThemedButton)`
   background-color: ${(props) => props.theme.color.c4};
   color: ${(props) => props.theme.color.c5};
+  padding: 10px;
 
   &:hover {
     background-color: ${(props) => props.theme.color.c1};
@@ -99,6 +106,10 @@ const CloseButton = styled(ThemedButton)`
 
 const ChangeAvatarSpan = styled.span`
   cursor: pointer;
+`;
+
+const NoAccess = styled.p`
+  margin: 40px auto;
 `;
 
 function ProfileAccountInfo({ user }) {
@@ -155,7 +166,9 @@ function ProfileAccountInfo({ user }) {
           </ProfileInfo>
         </ProfileInfoContainer>
       ) : (
-        <p>(Remember to add loader here)</p>
+        <NoAccess>
+          heyheyhey, your not supposed to be here, login first!
+        </NoAccess>
       )}
       <ModalBackdrop visible={isModalOpen}>
         <ModalContent>
@@ -164,12 +177,14 @@ function ProfileAccountInfo({ user }) {
             name="media"
             value={newAvatar}
             onChange={(e) => setNewAvatar(e.target.value)}
-            placeholder="Image URL"
+            placeholder="Enter new Image URL"
           ></ChangeAvatarInput>
-          <ChangeAvatarButton type="button" onClick={handleAvatarUpdate}>
-            Change Avatar
-          </ChangeAvatarButton>
-          <CloseButton onClick={closeAvatarModal}>Close</CloseButton>
+          <ButtonGroup>
+            <ChangeAvatarButton type="button" onClick={handleAvatarUpdate}>
+              Change Avatar
+            </ChangeAvatarButton>
+            <CloseButton onClick={closeAvatarModal}>Close</CloseButton>
+          </ButtonGroup>
         </ModalContent>
       </ModalBackdrop>
     </StyleSheetManager>

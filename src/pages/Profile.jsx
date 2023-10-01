@@ -51,9 +51,7 @@ function ProfilePage() {
         const userData = await fetchProfile();
 
         setUser(userData);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
+      } catch (error) {}
     }
 
     fetchUser();
@@ -65,10 +63,13 @@ function ProfilePage() {
         <Width>
           <AccountInfoAndOptions>
             <ProfileAccountInfo user={user} />
-
-            <Link to="/CreateVenue">
-              <StyledThemedButton>Create Venue</StyledThemedButton>
-            </Link>
+            {user ? (
+              <Link to="/CreateVenue">
+                <StyledThemedButton>Create Venue</StyledThemedButton>
+              </Link>
+            ) : (
+              <p></p>
+            )}
           </AccountInfoAndOptions>
 
           <BookingAndVenueContainer>

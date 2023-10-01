@@ -118,7 +118,7 @@ const BookingInfoList = styled.li`
 
 const LabelRow = styled.div`
   display: flex;
-  justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
   flex-direction: column;
 `;
@@ -129,7 +129,7 @@ const Label = styled.div`
 
 const ValueRow = styled.div`
   display: flex;
-  justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
   flex-direction: column;
 `;

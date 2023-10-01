@@ -3,6 +3,8 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ThemedButton from "../../styles/Button";
+import LoginModal from "../Login";
+import { Link } from "react-router-dom";
 
 const BookingContainer = styled.form`
   display: flex;
@@ -51,7 +53,7 @@ const OverlappMessage = styled.p`
   padding: 5px;
 `;
 
-const SuccessMsg = styled.div`
+const SuccessMsg = styled(Link)`
   padding: 10px;
   background-color: green;
   margin: 10px 0px;
@@ -71,9 +73,12 @@ function BookingForm({
 }) {
   const [overlapError, setOverlapError] = useState("");
   const [successBooking, setSuccessBooking] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem("accessToken")
+  );
+  const [buttonText, setButtonText] = useState(
+    accessToken ? "Book Venue" : "Login to book venue"
   );
 
   useEffect(() => {
@@ -132,8 +137,15 @@ function BookingForm({
       }
     } catch (error) {
       console.error("An error occurred while making the booking:", error);
-    } finally {
-      setLoading(false);
+    }
+  };
+
+  const handleBookVenueClick = () => {
+    if (accessToken) {
+      setButtonText("Book Venue");
+      handleBookingSubmit();
+    } else {
+      setIsLoginModalOpen(true);
     }
   };
 
@@ -156,66 +168,62 @@ function BookingForm({
   };
 
   return (
-    <BookingContainer onSubmit={handleBookingSubmit}>
-      <H2>Booking</H2>
-      <H3>Choose guest count</H3>
-      <Select
-        value={selectedGuests}
-        onChange={(event) => setSelectedGuests(parseInt(event.target.value))}
-      >
-        {guestOptions.map((guestCount) => (
-          <option key={guestCount} value={guestCount}>
-            {guestCount} Guest{guestCount !== 1 ? "s" : ""}
-          </option>
-        ))}
-      </Select>
-      <H3>Choose Booking Dates</H3>
-      <StyledDateSpan onClick={() => setShowDatePicker(!showDatePicker)}>
-        {dateRange[0] && dateRange[1]
-          ? `${dateRange[0].toLocaleDateString()} - ${dateRange[1].toLocaleDateString()}`
-          : "Check in - Check out"}
-      </StyledDateSpan>
-      {showDatePicker && (
-        <div>
-          <DatePicker
-            selected={dateRange[0]}
-            startDate={dateRange[0]}
-            endDate={dateRange[1]}
-            onChange={handleDateSelection}
-            selectsRange
-            inline
-            dateFormat="dd/MM/yyyy"
-            excludeDates={disabledDates}
-          />
-          {overlapError && <OverlappMessage>{overlapError}</OverlappMessage>}
-        </div>
-      )}
-      <SelectedBooking>
-        You have chosen:{" "}
-        <b>
-          {selectedGuests} guests - Staying over{" "}
+    <>
+      <BookingContainer onSubmit={handleBookingSubmit}>
+        <H2>Booking</H2>
+        <H3>Choose guest count</H3>
+        <Select
+          value={selectedGuests}
+          onChange={(event) => setSelectedGuests(parseInt(event.target.value))}
+        >
+          {guestOptions.map((guestCount) => (
+            <option key={guestCount} value={guestCount}>
+              {guestCount} Guest{guestCount !== 1 ? "s" : ""}
+            </option>
+          ))}
+        </Select>
+        <H3>Choose Booking Dates</H3>
+        <StyledDateSpan onClick={() => setShowDatePicker(!showDatePicker)}>
           {dateRange[0] && dateRange[1]
-            ? Math.ceil((dateRange[1] - dateRange[0]) / (24 * 60 * 60 * 1000))
-            : 0}{" "}
-          Nights.
-        </b>
-      </SelectedBooking>
-      <TotalH3>Total: £{totalPrice},- </TotalH3>
-      <ThemedButton type="submit" disabled={!accessToken || loading}>
-        {loading
-          ? "Booking in progress..."
-          : accessToken
-          ? "Book Venue"
-          : "Login to book a venue"}
-      </ThemedButton>
-      {accessToken
-        ? successBooking && (
-            <a href="/Profile">
-              <SuccessMsg>{successBooking}</SuccessMsg>
-            </a>
-          )
-        : null}
-    </BookingContainer>
+            ? `${dateRange[0].toLocaleDateString()} - ${dateRange[1].toLocaleDateString()}`
+            : "Check in - Check out"}
+        </StyledDateSpan>
+        {showDatePicker && (
+          <div>
+            <DatePicker
+              selected={dateRange[0]}
+              startDate={dateRange[0]}
+              endDate={dateRange[1]}
+              onChange={handleDateSelection}
+              selectsRange
+              inline
+              dateFormat="dd/MM/yyyy"
+              excludeDates={disabledDates}
+            />
+            {overlapError && <OverlappMessage>{overlapError}</OverlappMessage>}
+          </div>
+        )}
+        <SelectedBooking>
+          You have chosen:{" "}
+          <b>
+            {selectedGuests} guests - Staying over{" "}
+            {dateRange[0] && dateRange[1]
+              ? Math.ceil((dateRange[1] - dateRange[0]) / (24 * 60 * 60 * 1000))
+              : 0}{" "}
+            Nights.
+          </b>
+        </SelectedBooking>
+        <TotalH3>Total: £{totalPrice},- </TotalH3>
+        {successBooking && (
+          <SuccessMsg to="/Profile">{successBooking}</SuccessMsg>
+        )}
+        <ThemedButton onClick={handleBookVenueClick}>{buttonText}</ThemedButton>
+      </BookingContainer>
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
+    </>
   );
 }
 
