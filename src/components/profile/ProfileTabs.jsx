@@ -41,21 +41,26 @@ function ProfileTabGroup({ user }) {
     default:
       content = null;
   }
+
+  const isVenuesTabVisible = user && user.venueManager;
+
   return (
     <>
       <StyleSheetManager
         shouldForwardProp={(prop) => !["active"].includes(prop)}
       >
         <ButtonGroup>
-          {types.map((type) => (
-            <Tab
-              key={type}
-              active={active === type}
-              onClick={() => setActive(type)}
-            >
-              {type}
-            </Tab>
-          ))}
+          {types.map((type) =>
+            type === "Venues" && !isVenuesTabVisible ? null : (
+              <Tab
+                key={type}
+                active={active === type}
+                onClick={() => setActive(type)}
+              >
+                {type}
+              </Tab>
+            )
+          )}
         </ButtonGroup>
         {content}
       </StyleSheetManager>

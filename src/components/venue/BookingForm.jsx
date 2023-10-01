@@ -74,6 +74,7 @@ function BookingForm({
   const [overlapError, setOverlapError] = useState("");
   const [successBooking, setSuccessBooking] = useState("");
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [errorBooking, setErrorBooking] = useState("");
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem("accessToken")
   );
@@ -136,7 +137,9 @@ function BookingForm({
         setSuccessBooking("");
       }
     } catch (error) {
-      console.error("An error occurred while making the booking:", error);
+      setErrorBooking(
+        "Failed booking, please choose check in and checkout dates."
+      );
     }
   };
 
@@ -214,6 +217,7 @@ function BookingForm({
           </b>
         </SelectedBooking>
         <TotalH3>Total: £{totalPrice},- </TotalH3>
+        <div>{errorBooking}</div>
         {successBooking && (
           <SuccessMsg to="/Profile">{successBooking}</SuccessMsg>
         )}

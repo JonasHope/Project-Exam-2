@@ -24,16 +24,12 @@ const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 10px;
+  justify-content: center;
 `;
 
 const H1 = styled.h1`
   margin: 15px 0px;
   font-size: 1.3rem;
-`;
-
-const EmailProfile = styled.span`
-  font-size: 0.9rem;
-  color: ${(props) => props.theme.color.c4};
 `;
 
 const VM = styled.span`
@@ -112,6 +108,13 @@ const NoAccess = styled.p`
   margin: 40px auto;
 `;
 
+const MissingAvatar = styled.div`
+  color: darkred;
+  width: 100px;
+  font-size: 0.8rem;
+  margin: 10px 5px;
+`;
+
 function ProfileAccountInfo({ user }) {
   const [profileImage, setProfileImage] = useState(null);
   const [newAvatar, setNewAvatar] = useState("");
@@ -154,14 +157,23 @@ function ProfileAccountInfo({ user }) {
       {user ? (
         <ProfileInfoContainer>
           <ProfileImageContainer>
-            <ProfileImage image={profileImage} alt={user?.name}></ProfileImage>
+            {profileImage ? (
+              <ProfileImage
+                image={profileImage}
+                alt={user?.name}
+              ></ProfileImage>
+            ) : (
+              <MissingAvatar>
+                Seems like you haven't added an avatar yet.
+              </MissingAvatar>
+            )}
+
             <ChangeAvatarSpan onClick={openAvatarModal}>
               Change Avatar?
             </ChangeAvatarSpan>
           </ProfileImageContainer>
           <ProfileInfo>
             <H1>{user.name}</H1>
-            <EmailProfile>{user.email}</EmailProfile>
             <VM>{user.venueManager && <span>Venue Manager</span>}</VM>
           </ProfileInfo>
         </ProfileInfoContainer>

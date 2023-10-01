@@ -3,6 +3,7 @@ import { styled, StyleSheetManager } from "styled-components";
 import { Link } from "react-router-dom";
 import { fetchVenues } from "../API/apiVenues";
 import Pagination from "./Pagination";
+import CustomLoader from "./loader/loader";
 
 const VenuesContainer = styled.div`
   margin-left: 20px;
@@ -142,6 +143,7 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
   const [venues, setVenues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getVenues() {
@@ -163,6 +165,7 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
 
       const calculatedTotalPages = Math.ceil(filteredVenues.length / 20);
       setTotalPages(calculatedTotalPages);
+      setLoading(false);
     }
     getVenues();
   }, [sortOrder, countryFilter, maxGuestsFilter]);
@@ -174,34 +177,40 @@ function FetchVenues({ sortOrder, countryFilter, maxGuestsFilter }) {
   return (
     <StyleSheetManager shouldForwardProp={(prop) => !["active"].includes(prop)}>
       <VenuesContainer>
-        {venues.slice((currentPage - 1) * 20, currentPage * 20).map((venue) => (
-          <StyledLink to={`/Venue/${venue.id}`} key={venue.id}>
-            <VenuesContent>
-              <CardSplitter>
-                <VenueImage image={venue.media[0]}>
-                  <VenueCountry>
-                    <Country>{venue.location.country}</Country>
-                  </VenueCountry>
-                </VenueImage>
-                <VenueText>
-                  <NameAndCity>
-                    <VenueName>{venue.name}</VenueName>
-                    <span>{venue.location.city}</span>
-                  </NameAndCity>
-                  <VenueRating>
-                    <Rating>{venue.rating}</Rating>
-                    <RatingSpan>Rating</RatingSpan>
-                  </VenueRating>
-                </VenueText>
-              </CardSplitter>
+        {loading ? (
+          <CustomLoader />
+        ) : (
+          venues
+            .slice((currentPage - 1) * 20, currentPage * 20)
+            .map((venue) => (
+              <StyledLink to={`/Venue/${venue.id}`} key={venue.id}>
+                <VenuesContent>
+                  <CardSplitter>
+                    <VenueImage image={venue.media[0]}>
+                      <VenueCountry>
+                        <Country>{venue.location.country}</Country>
+                      </VenueCountry>
+                    </VenueImage>
+                    <VenueText>
+                      <NameAndCity>
+                        <VenueName>{venue.name}</VenueName>
+                        <span>{venue.location.city}</span>
+                      </NameAndCity>
+                      <VenueRating>
+                        <Rating>{venue.rating}</Rating>
+                        <RatingSpan>Rating</RatingSpan>
+                      </VenueRating>
+                    </VenueText>
+                  </CardSplitter>
 
-              <VenuePriceContainer>
-                <Price>£ {venue.price}</Price>
-                <span>for 1 night per person</span>
-              </VenuePriceContainer>
-            </VenuesContent>
-          </StyledLink>
-        ))}
+                  <VenuePriceContainer>
+                    <Price>£ {venue.price}</Price>
+                    <span>for 1 night per person</span>
+                  </VenuePriceContainer>
+                </VenuesContent>
+              </StyledLink>
+            ))
+        )}
         {totalPages > 1 && (
           <Pagination
             currentPage={currentPage}

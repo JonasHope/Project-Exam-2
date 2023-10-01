@@ -7,6 +7,7 @@ import { fetchProfile } from "../API/apiUsers";
 import ProfileTabGroup from "../components/profile/ProfileTabs";
 import ThemedButton from "../styles/Button";
 import { Link } from "react-router-dom";
+import CustomLoader from "../components/loader/loader";
 
 const ProfileContainer = styled.div`
   background-color: ${(props) => props.theme.color.c2};
@@ -44,6 +45,7 @@ const StyledThemedButton = styled(ThemedButton)`
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     async function fetchUser() {
@@ -51,6 +53,7 @@ function ProfilePage() {
         const userData = await fetchProfile();
 
         setUser(userData);
+        setLoader(false);
       } catch (error) {}
     }
 
@@ -61,20 +64,26 @@ function ProfilePage() {
     <StyleSheetManager shouldForwardProp={(prop) => !["image"].includes(prop)}>
       <ProfileContainer>
         <Width>
-          <AccountInfoAndOptions>
-            <ProfileAccountInfo user={user} />
-            {user ? (
-              <Link to="/CreateVenue">
-                <StyledThemedButton>Create Venue</StyledThemedButton>
-              </Link>
-            ) : (
-              <p></p>
-            )}
-          </AccountInfoAndOptions>
+          {loader ? (
+            <CustomLoader />
+          ) : (
+            <>
+              <AccountInfoAndOptions>
+                <ProfileAccountInfo user={user} />
+                {user && user.venueManager ? (
+                  <Link to="/CreateVenue">
+                    <StyledThemedButton>Create Venue</StyledThemedButton>
+                  </Link>
+                ) : (
+                  <p></p>
+                )}
+              </AccountInfoAndOptions>
 
-          <BookingAndVenueContainer>
-            <ProfileTabGroup user={user} />
-          </BookingAndVenueContainer>
+              <BookingAndVenueContainer>
+                <ProfileTabGroup user={user} />
+              </BookingAndVenueContainer>
+            </>
+          )}
         </Width>
       </ProfileContainer>
     </StyleSheetManager>

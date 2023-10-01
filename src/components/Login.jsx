@@ -100,6 +100,11 @@ const VenManMsg = styled.span`
   margin-bottom: 10px;
 `;
 
+const SuccessMsg = styled.p`
+  color: darkgreen;
+  font-weight: bold;
+`;
+
 function RegisterForm({ onSubmit }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -107,6 +112,7 @@ function RegisterForm({ onSubmit }) {
   const [avatar, setAvatar] = useState("");
   const [venueManager, setVenueManager] = useState(false);
   const [failResponse, setFailResponse] = useState("");
+  const [successRegister, setSuccessRegister] = useState("");
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
@@ -130,7 +136,7 @@ function RegisterForm({ onSubmit }) {
       );
 
       if (response.ok) {
-        console.log("Registration successful");
+        setSuccessRegister("Registration successful");
       } else {
         const failedResponse = await response.json();
         const failMessages = failedResponse.errors.map((error, index) => (
@@ -162,7 +168,7 @@ function RegisterForm({ onSubmit }) {
           />
           <label htmlFor="email">Email</label>
           <Input
-            id="email"
+            id="regEmail"
             type="email"
             name="email"
             placeholder="Email"
@@ -174,7 +180,7 @@ function RegisterForm({ onSubmit }) {
           />
           <label htmlFor="password">Password</label>
           <Input
-            id="password"
+            id="regPassword"
             type="password"
             name="password"
             placeholder="Password"
@@ -201,6 +207,7 @@ function RegisterForm({ onSubmit }) {
           </label>
           <VenManMsg>You can't change this later.</VenManMsg>
           <ThemedButton type="submit">Register</ThemedButton>
+          <SuccessMsg>{successRegister}</SuccessMsg>
           <ErrorMsg>{failResponse}</ErrorMsg>
         </Form>
         <RegisterAccount onClick={onSubmit}>
@@ -270,7 +277,7 @@ function LoginModal({ isOpen, onClose }) {
                 <Form onSubmit={handleLoginSubmit}>
                   <label htmlFor="email">Email</label>
                   <Input
-                    id="email"
+                    id="loginEmail"
                     type="email"
                     name="email"
                     placeholder="Email"
@@ -282,7 +289,7 @@ function LoginModal({ isOpen, onClose }) {
                   />
                   <label htmlFor="password">Password</label>
                   <Input
-                    id="password"
+                    id="loginPassword"
                     type="password"
                     name="password"
                     placeholder="Password"

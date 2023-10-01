@@ -9,6 +9,7 @@ import VenueHeader from "../components/venue/VenueHeader";
 import BookingForm from "../components/venue/BookingForm";
 import VenueInformation from "../components/venue/VenueContent";
 import GoBackClick from "../components/BackButton";
+import CustomLoader from "../components/loader/loader";
 
 const VenueContainer = styled.div`
   background-color: ${(props) => props.theme.color.c2};
@@ -45,12 +46,14 @@ function Venue() {
   const [maxGuests, setMaxGuests] = useState(null);
   const [selectedGuests, setSelectedGuests] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchVenue(id)
       .then((data) => {
         setVenueData(data);
         setMaxGuests(data.maxGuests);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching venue:", error);
@@ -73,29 +76,38 @@ function Venue() {
   return (
     <VenueContainer>
       <Width>
-        <GoBackClick />
-        <VenueLayout>
-          <BookingInfoContainer>
-            <VenueHeader venueData={venueData} />
-            <BookingForm
-              venueData={venueData}
-              selectedGuests={selectedGuests}
-              setSelectedGuests={setSelectedGuests}
-              setDateRange={setDateRange}
-              guestOptions={
-                maxGuests
-                  ? Array.from({ length: maxGuests }, (_, index) => index + 1)
-                  : []
-              }
-              dateRange={dateRange}
-              handleDateSelection={handleDateSelection}
-              showDatePicker={showDatePicker}
-              setShowDatePicker={setShowDatePicker}
-              totalPrice={totalPrice}
-            />
-          </BookingInfoContainer>
-          <VenueInformation venueData={venueData} />
-        </VenueLayout>
+        {loading ? (
+          <CustomLoader />
+        ) : (
+          <>
+            <GoBackClick />
+            <VenueLayout>
+              <BookingInfoContainer>
+                <VenueHeader venueData={venueData} />
+                <BookingForm
+                  venueData={venueData}
+                  selectedGuests={selectedGuests}
+                  setSelectedGuests={setSelectedGuests}
+                  setDateRange={setDateRange}
+                  guestOptions={
+                    maxGuests
+                      ? Array.from(
+                          { length: maxGuests },
+                          (_, index) => index + 1
+                        )
+                      : []
+                  }
+                  dateRange={dateRange}
+                  handleDateSelection={handleDateSelection}
+                  showDatePicker={showDatePicker}
+                  setShowDatePicker={setShowDatePicker}
+                  totalPrice={totalPrice}
+                />
+              </BookingInfoContainer>
+              <VenueInformation venueData={venueData} />
+            </VenueLayout>
+          </>
+        )}
       </Width>
     </VenueContainer>
   );
