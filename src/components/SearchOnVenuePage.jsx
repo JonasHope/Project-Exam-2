@@ -18,7 +18,6 @@ const SearchContainer = styled.div`
 const SearchContent = styled.div`
   margin: auto;
   border-radius: 5px;
-  width: 100%;
   box-shadow: 0px 0px 3px ${(props) => props.theme.color.c4};
   padding: 10px;
 
@@ -59,25 +58,35 @@ const H3 = styled.h4`
   }
 `;
 
-const SelectGuests = styled.input`
+const GuestsPicker = styled.div`
   color: ${(props) => props.theme.color.c3};
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 16px;
   margin-right: 5px;
-  width: 80px;
-  padding: 10px 15px;
+  width: 100px;
+  height: 40px;
   border: 1px solid ${(props) => props.theme.color.c1};
   border-radius: 20px;
   background-color: ${(props) => props.theme.color.c5};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 10px;
 
   ${(props) => props.theme.media.desktop} {
     border-radius: 0px 20px 20px 0px;
-    margin: 0px;
   }
+`;
+
+const SelectGuests = styled.input`
+  border: none;
+  width: 80px;
+  background-color: inherit;
 
   &::placeholder {
     color: ${(props) => props.theme.color.c3};
-    font-size: 0.9rem;
+    font-size: 16px;
+    font-family: "poppins-r";
   }
 `;
 
@@ -186,14 +195,16 @@ function StaticSearchComponent({ onSearch }) {
                   style={{ color: "#ff7e5f" }}
                 />
               </IconSpaceing>
-              <SelectGuests
-                type="number"
-                id="guests"
-                name="guests"
-                placeholder="Guests"
-                value={maxGuests}
-                onChange={(e) => setMaxGuests(e.target.value)}
-              />
+              <GuestsPicker>
+                <SelectGuests
+                  type="number"
+                  id="guests"
+                  name="guests"
+                  placeholder="Guests"
+                  value={maxGuests}
+                  onChange={(e) => setMaxGuests(e.target.value)}
+                />
+              </GuestsPicker>
             </SearchFormChildren>
           </ChildrenContainer>
           <StyledThemedButton

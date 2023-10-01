@@ -8,12 +8,16 @@ const DropdownWrapper = styled.div`
   display: inline-block;
   cursor: pointer;
   background-color: ${(props) => props.theme.color.c5};
-  padding: 10px 15px;
+  height: 40px;
   border: 1px solid ${(props) => props.theme.color.c1};
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 16px;
   color: ${(props) => props.theme.color.c3};
-  width: 80px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 10px;
 
   ${(props) => props.theme.media.desktop} {
     border-radius: 20px 0px 0px 20px;

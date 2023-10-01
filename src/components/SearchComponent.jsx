@@ -121,7 +121,7 @@ const HideSearch = styled.div`
   }
 
   ${(props) => props.theme.media.mobile} {
-    transform: translateX(${(props) => (props.visible ? "0" : "-495%")});
+    transform: translateX(${(props) => (props.visible ? "0" : "-585%")});
 
     width: 20px;
     border-radius: 0px 20px 20px 0px;
