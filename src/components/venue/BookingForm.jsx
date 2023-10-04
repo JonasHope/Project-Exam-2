@@ -58,6 +58,7 @@ const SuccessMsg = styled(Link)`
   background-color: green;
   margin: 10px 0px;
   color: white;
+  border-radius: 10px;
 `;
 
 function BookingForm({
@@ -133,14 +134,14 @@ function BookingForm({
         setSuccessBooking(
           "Your booking was successful! Click here to view your bookings."
         );
+        setErrorBooking("");
       } else {
         setSuccessBooking("");
-        setErrorBooking(
-          "Failed booking, please choose check in and checkout dates."
-        );
       }
     } catch (error) {
-      console.log("error", error);
+      setErrorBooking(
+        "Failed booking, please choose check in and checkout dates."
+      );
     }
   };
 
