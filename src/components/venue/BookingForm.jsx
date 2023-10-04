@@ -135,11 +135,12 @@ function BookingForm({
         );
       } else {
         setSuccessBooking("");
+        setErrorBooking(
+          "Failed booking, please choose check in and checkout dates."
+        );
       }
     } catch (error) {
-      setErrorBooking(
-        "Failed booking, please choose check in and checkout dates."
-      );
+      console.log("error", error);
     }
   };
 
